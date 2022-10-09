@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-26 16:19:06
- * @LastEditTime: 2022-07-26 15:03:42
+ * @LastEditTime: 2022-10-08 17:53:28
  * @Description : 静态平衡测试-测前体验
 -->
 <template>

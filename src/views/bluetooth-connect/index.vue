@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-03-03 09:30:27
- * @LastEditTime: 2022-04-28 15:41:37
+ * @LastEditTime: 2022-10-08 17:23:55
  * @Description : 蓝牙连接
 -->
 <template>
