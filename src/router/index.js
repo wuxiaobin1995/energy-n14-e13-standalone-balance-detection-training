@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2022-10-09 10:52:10
+ * @LastEditTime: 2022-12-16 11:41:47
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -35,6 +35,14 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('@/views/register')
+  },
+
+  /* 数据迁移 */
+  {
+    path: '/data-migration',
+    name: 'data-migration',
+    component: () => import('@/views/data-migration'),
+    meta: ['数据迁移']
   },
 
   /* 布局组件 */

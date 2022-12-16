@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-18 11:10:02
- * @LastEditTime: 2022-04-24 17:42:01
+ * @LastEditTime: 2022-12-16 11:42:56
  * @Description : 头部状态栏
 -->
 <template>
@@ -64,6 +64,12 @@
             </svg>
             &nbsp;&nbsp;首页
           </el-dropdown-item>
+          <el-dropdown-item command="数据迁移">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-shouye"></use>
+            </svg>
+            &nbsp;&nbsp;数据迁移
+          </el-dropdown-item>
           <el-dropdown-item divided command="退出登录">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-tuichudenglu"></use>
@@ -114,6 +120,21 @@ export default {
     handleCommand(command) {
       if (command === '首页') {
         this.$router.push({ path: '/layout/home' })
+      } else if (command === '数据迁移') {
+        this.$prompt('请输入密码', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /^htpm$/,
+          inputErrorMessage: '密码不正确',
+          showClose: true,
+          closeOnClickModal: false
+        })
+          .then(() => {
+            this.$router.push({
+              path: '/data-migration'
+            })
+          })
+          .catch(() => {})
       } else if (command === '退出登录') {
         this.$confirm('退出当前账户?', '提示', {
           confirmButtonText: '确定',
