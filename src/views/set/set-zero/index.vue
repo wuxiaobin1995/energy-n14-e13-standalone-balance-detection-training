@@ -1,11 +1,11 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-04-20 10:48:12
- * @LastEditTime: 2022-04-26 11:18:02
+ * @LastEditTime: 2023-03-02 14:46:21
  * @Description : 校准调零页面
 -->
 <template>
-  <div class="calibrate-zero">
+  <div class="set-zero">
     <div class="text">在圆盘尽可能处于水平静止的前提下，点击“调零”按钮！</div>
     <div class="show">
       <div class="show__item">
@@ -30,7 +30,7 @@ import SerialPort from 'serialport'
 import Readline from '@serialport/parser-readline'
 
 export default {
-  name: 'calibrate-zero',
+  name: 'set-zero',
 
   data() {
     return {
@@ -46,8 +46,6 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('setIsCollapse', false)
-
     this.xStandard = this.$store.state.zeroStandard.xStandard
     this.yStandard = this.$store.state.zeroStandard.yStandard
 
@@ -182,7 +180,7 @@ export default {
               })
               .catch(() => {
                 this.$router.push({
-                  path: '/layout/home'
+                  path: '/home'
                 })
               })
           }
@@ -207,7 +205,7 @@ export default {
             })
             .catch(() => {
               this.$router.push({
-                path: '/layout/home'
+                path: '/home'
               })
             })
         })
@@ -233,7 +231,7 @@ export default {
       this.$router.push({
         path: '/refresh',
         query: {
-          routerName: JSON.stringify('/layout/calibrate-zero'),
+          routerName: JSON.stringify('/set-zero'),
           duration: JSON.stringify(300)
         }
       })
@@ -243,7 +241,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.calibrate-zero {
+.set-zero {
   width: 100%;
   height: 100%;
   @include flex(column, center, center);

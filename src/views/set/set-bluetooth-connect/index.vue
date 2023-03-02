@@ -5,7 +5,7 @@
  * @Description : 蓝牙连接
 -->
 <template>
-  <div class="bluetooth-connect">
+  <div class="set-bluetooth-connect">
     <div class="btn">
       <el-button
         class="btn__connect"
@@ -30,7 +30,7 @@ import SerialPort from 'serialport'
 import Readline from '@serialport/parser-readline'
 
 export default {
-  name: 'bluetooth-connect',
+  name: 'set-bluetooth-connect',
 
   data() {
     return {
@@ -48,8 +48,6 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('setIsCollapse', false)
-
     this.xStandard = this.$store.state.zeroStandard.xStandard
     this.yStandard = this.$store.state.zeroStandard.yStandard
 
@@ -141,7 +139,7 @@ export default {
                         confirmButtonText: '确 定',
                         callback: () => {
                           this.$router.push({
-                            path: '/layout/calibrate-zero'
+                            path: '/calibrate-zero'
                           })
                         }
                       }
@@ -200,7 +198,7 @@ export default {
               })
               .catch(() => {
                 this.$router.push({
-                  path: '/layout/home'
+                  path: '/home'
                 })
               })
           }
@@ -225,7 +223,7 @@ export default {
             })
             .catch(() => {
               this.$router.push({
-                path: '/layout/home'
+                path: '/home'
               })
             })
         })
@@ -256,7 +254,7 @@ export default {
       this.$router.push({
         path: '/refresh',
         query: {
-          routerName: JSON.stringify('/layout/bluetooth-connect'),
+          routerName: JSON.stringify('/set-bluetooth-connect'),
           duration: JSON.stringify(300)
         }
       })
@@ -266,7 +264,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bluetooth-connect {
+.set-bluetooth-connect {
   width: 100%;
   height: 100%;
   @include flex(column, center, center);

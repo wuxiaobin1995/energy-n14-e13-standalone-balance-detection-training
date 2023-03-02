@@ -1,11 +1,11 @@
 <!--
  * @Author      : Mr.bin
- * @Date        : 2022-07-28 11:40:23
- * @LastEditTime: 2023-03-02 17:43:56
- * @Description : 用户信息修改
+ * @Date        : 2022-07-28 11:39:15
+ * @LastEditTime: 2023-03-02 17:43:02
+ * @Description : 添加用户
 -->
 <template>
-  <div class="user-edit" v-loading.fullscreen.lock="fullscreenLoading">
+  <div class="user-add">
     <div class="wrapper">
       <!-- 表单 -->
       <el-form
@@ -17,16 +17,12 @@
       >
         <!-- 分割线 -->
         <el-row>
-          <el-divider content-position="center">用户信息修改</el-divider>
+          <el-divider content-position="center">添加用户</el-divider>
         </el-row>
 
         <!-- 个人信息 -->
         <el-row type="flex" justify="space-around" class="form-main">
           <el-col :span="10">
-            <!-- ID -->
-            <el-form-item label="ID：" prop="userId">
-              <el-input v-model="formData.userId" disabled></el-input>
-            </el-form-item>
             <!-- 姓名 -->
             <el-form-item label="姓名：" prop="userName">
               <el-input
@@ -121,10 +117,10 @@
         <el-row class="btn">
           <el-button
             type="success"
-            icon="el-icon-edit"
+            icon="el-icon-edit-outline"
             class="btn-item"
-            @click="handleEdit"
-            >确认修改</el-button
+            @click="handleAdd"
+            >确认添加</el-button
           >
           <el-button
             type="danger"
@@ -143,19 +139,24 @@
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'user-edit',
+  name: 'user-add',
 
   data() {
     return {
-      /* 路由传参 */
-      userId: JSON.parse(this.$route.query.userId),
-      /* 其他 */
       manImg: require('@/assets/img/User/男.png'),
       womanImg: require('@/assets/img/User/女.png'),
-      fullscreenLoading: false, // 全屏加载
-
       /* 表单 */
-      formData: {},
+      formData: {
+        userId: '', // 唯一id
+        userName: '', // 姓名
+        sex: '男', // 性别
+        affectedSide: '左', // 患侧
+        height: '', // 身高
+        weight: '', // 体重
+        birthday: '', // 出生日期
+        remarks: '', // 备注
+        lastLoginTime: '' // 最后登陆时间
+      },
       rules: {
         userName: [
           { required: true, message: '姓名不能为空', trigger: 'blur' }
@@ -181,110 +182,33 @@ export default {
     }
   },
 
-  created() {
-    this.getUser()
-  },
-
   methods: {
     /**
-     * @description: 获取对应ID的用户信息数据
+     * @description: 添加用户
      */
-    getUser() {
-      this.fullscreenLoading = true
-      const db = initDB()
-      db.user
-        .where({
-          userId: this.userId
-        })
-        .toArray()
-        .then(res => {
-          this.formData = res[0]
-        })
-        .catch(() => {
-          this.$confirm(
-            `获取ID为 [${this.userId}] 的用户数据失败，请重试！`,
-            '提示',
-            {
-              type: 'warning',
-              center: true,
-              showClose: false,
-              closeOnClickModal: false,
-              closeOnPressEscape: false,
-              confirmButtonText: '重 试',
-              cancelButtonText: '返回上一页'
-            }
-          )
-            .then(() => {
-              this.getUser()
-            })
-            .catch(() => {
-              this.$router.push({
-                path: '/user'
-              })
-            })
-        })
-        .finally(() => {
-          this.fullscreenLoading = false
-        })
-    },
-
-    /**
-     * @description: 用户信息修改
-     */
-    handleEdit() {
+    handleAdd() {
       this.$refs.form.validate(valid => {
         if (valid) {
+          this.formData.userId = this.$moment().format('x') // 使用毫秒时间戳作为唯一id，字符串类型
           const db = initDB()
           db.user
-            .update(this.userId, this.formData)
+            .add(this.formData)
             .then(() => {
               this.$message({
-                message: '用户信息修改成功',
+                message: '添加用户成功',
                 type: 'success',
                 duration: 3000
               })
             })
             .then(() => {
-              if (
-                this.$store.state.currentUserInfo.userId ===
-                this.formData.userId
-              ) {
-                this.$store.dispatch('changeCurrentUserInfo', {
-                  userId: this.formData.userId,
-                  userName: this.formData.userName,
-                  sex: this.formData.sex,
-                  affectedSide: this.formData.affectedSide,
-                  height: this.formData.height,
-                  weight: this.formData.weight,
-                  birthday: this.formData.birthday,
-                  remarks: this.formData.remarks,
-                  lastLoginTime: this.formData.lastLoginTime
-                })
-              }
-            })
-            .then(() => {
-              this.$router.push({
-                path: '/user'
-              })
+              this.$router.push({ path: '/user' })
             })
             .catch(() => {
-              this.$confirm(`用户信息修改失败，请重试！`, '提示', {
-                type: 'warning',
-                center: true,
-                showClose: false,
-                closeOnClickModal: false,
-                closeOnPressEscape: false,
-                confirmButtonText: '重 试',
-                cancelButtonText: '返回上一页'
+              this.$message({
+                message: '添加用户失败，该用户Id已存在，请重试！',
+                type: 'error',
+                duration: 4000
               })
-                .then(() => {
-                  this.handleEdit()
-                })
-                .catch(() => {
-                  this.$router.push({
-                    path: '/user'
-                  })
-                })
             })
         } else {
           return false
@@ -305,7 +229,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-edit {
+.user-add {
   width: 100%;
   height: 100%;
   @include flex(row, center, center);

@@ -1,11 +1,11 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-07-28 14:00:00
- * @LastEditTime: 2022-12-16 11:45:55
+ * @LastEditTime: 2023-03-02 14:43:25
  * @Description : 数据迁移
 -->
 <template>
-  <div class="data-migration">
+  <div class="set-data-migration">
     <div class="wrapper">
       <el-page-header
         class="page"
@@ -58,7 +58,7 @@ import Tools from './utils/index.js'
 import fs from 'fs'
 
 export default {
-  name: 'data-migration',
+  name: 'set-data-migration',
 
   data() {
     return {
@@ -74,7 +74,7 @@ export default {
      */
     handleToHome() {
       this.$router.push({
-        path: '/layout/home'
+        path: '/home'
       })
     },
 
@@ -277,7 +277,7 @@ export default {
       this.$router.push({
         path: '/refresh',
         query: {
-          routerName: JSON.stringify('/data-migration'),
+          routerName: JSON.stringify('/set-data-migration'),
           duration: JSON.stringify(300)
         }
       })
@@ -287,7 +287,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.data-migration {
+.set-data-migration {
   width: 100%;
   height: 100%;
   @include flex(row, center, center);
