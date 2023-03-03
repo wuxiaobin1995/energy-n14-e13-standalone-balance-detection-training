@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-02 11:20:41
- * @LastEditTime: 2023-03-02 11:20:49
+ * @LastEditTime: 2023-03-03 17:47:50
  * @Description : home
 -->
 <template>
@@ -128,9 +128,42 @@ export default {
         })
       } else if (src === 'src2') {
         if (this.$store.state.currentUserInfo.userId) {
-          this.$router.push({
-            path: '/test-select'
-          })
+          if (this.$store.state.isBluetooth) {
+            if (
+              this.$store.state.zeroStandard.xStandard ||
+              this.$store.state.zeroStandard.yStandard
+            ) {
+              this.$router.push({
+                path: '/test-select'
+              })
+            } else {
+              this.$confirm(`检测到您还没有校准调零！`, '提示', {
+                type: 'warning',
+                center: true,
+                showCancelButton: false,
+                confirmButtonText: '调 零'
+              })
+                .then(() => {
+                  this.$router.push({
+                    path: '/set-zero'
+                  })
+                })
+                .catch(() => {})
+            }
+          } else {
+            this.$confirm(`检测到您还没有连接蓝牙！`, '提示', {
+              type: 'warning',
+              center: true,
+              showCancelButton: false,
+              confirmButtonText: '前去连接'
+            })
+              .then(() => {
+                this.$router.push({
+                  path: '/set-bluetooth-connect'
+                })
+              })
+              .catch(() => {})
+          }
         } else {
           this.$confirm(
             `检测到您还没有选择用户，请先到用户页面进行选择！`,
@@ -151,9 +184,42 @@ export default {
         }
       } else if (src === 'src3') {
         if (this.$store.state.currentUserInfo.userId) {
-          this.$router.push({
-            path: '/train-select'
-          })
+          if (this.$store.state.isBluetooth) {
+            if (
+              this.$store.state.zeroStandard.xStandard ||
+              this.$store.state.zeroStandard.yStandard
+            ) {
+              this.$router.push({
+                path: '/train-select'
+              })
+            } else {
+              this.$confirm(`检测到您还没有校准调零！`, '提示', {
+                type: 'warning',
+                center: true,
+                showCancelButton: false,
+                confirmButtonText: '调 零'
+              })
+                .then(() => {
+                  this.$router.push({
+                    path: '/set-zero'
+                  })
+                })
+                .catch(() => {})
+            }
+          } else {
+            this.$confirm(`检测到您还没有连接蓝牙！`, '提示', {
+              type: 'warning',
+              center: true,
+              showCancelButton: false,
+              confirmButtonText: '前去连接'
+            })
+              .then(() => {
+                this.$router.push({
+                  path: '/set-bluetooth-connect'
+                })
+              })
+              .catch(() => {})
+          }
         } else {
           this.$confirm(
             `检测到您还没有选择用户，请先到用户页面进行选择！`,
@@ -268,7 +334,7 @@ export default {
     position: relative;
 
     .item0 {
-      width: 560px;
+      width: 500px;
     }
     .item {
       width: 130px;

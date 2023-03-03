@@ -1,34 +1,32 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-02 17:48:59
- * @LastEditTime: 2023-03-03 17:45:42
- * @Description : 测试-项目选择
+ * @LastEditTime: 2023-03-03 17:45:22
+ * @Description : 训练-项目选择
 -->
 <template>
-  <div class="test-select">
+  <div class="train-select">
     <div class="btn">
       <el-button
         class="item"
-        :class="[isActiveStaticBalance]"
-        :icon="
-          isActiveStaticBalance === 'btn__active' ? 'el-icon-circle-check' : ''
-        "
+        :class="[isActiveRingHold]"
+        :icon="isActiveRingHold === 'btn__active' ? 'el-icon-circle-check' : ''"
         type="danger"
         round
-        @click="handleStaticBalance"
-        >静态平衡测试</el-button
+        @click="handleRingHold"
+        >圆环保持训练</el-button
       >
 
       <el-button
         class="item"
-        :class="[isActiveDynamicBalance]"
+        :class="[isActiveCircleHold]"
         :icon="
-          isActiveDynamicBalance === 'btn__active' ? 'el-icon-circle-check' : ''
+          isActiveCircleHold === 'btn__active' ? 'el-icon-circle-check' : ''
         "
         type="warning"
         round
-        @click="handleDynamicBalance"
-        >动态平衡测试</el-button
+        @click="handleCircleHold"
+        >圆圈保持训练</el-button
       >
     </div>
 
@@ -42,28 +40,28 @@
 
 <script>
 export default {
-  name: 'test-select',
+  name: 'train-select',
 
   data() {
     return {
       /* 动态css */
-      isActiveStaticBalance: '',
-      isActiveDynamicBalance: ''
+      isActiveRingHold: '',
+      isActiveCircleHold: ''
     }
   },
 
   watch: {
     '$route.path': {
       handler(newVal, oldval) {
-        if (newVal === '/test-select/static-balance-set') {
-          this.isActiveStaticBalance = 'btn__active'
+        if (newVal === '/train-select/ring-hold-set') {
+          this.isActiveRingHold = 'btn__active'
         } else {
-          this.isActiveStaticBalance = ''
+          this.isActiveRingHold = ''
         }
-        if (newVal === '/test-select/dynamic-balance-set') {
-          this.isActiveDynamicBalance = 'btn__active'
+        if (newVal === '/train-select/circle-hold-set') {
+          this.isActiveCircleHold = 'btn__active'
         } else {
-          this.isActiveDynamicBalance = ''
+          this.isActiveCircleHold = ''
         }
       },
       immediate: true
@@ -72,17 +70,17 @@ export default {
 
   methods: {
     /**
-     * @description: 静态平衡测试
+     * @description: 圆环保持训练
      */
-    handleStaticBalance() {
-      this.$router.push({ path: '/test-select/static-balance-set' })
+    handleRingHold() {
+      this.$router.push({ path: '/train-select/ring-hold-set' })
     },
 
     /**
-     * @description: 动态平衡测试
+     * @description: 圆圈保持训练
      */
-    handleDynamicBalance() {
-      this.$router.push({ path: '/test-select/dynamic-balance-set' })
+    handleCircleHold() {
+      this.$router.push({ path: '/train-select/circle-hold-set' })
     }
   }
 }
@@ -99,7 +97,7 @@ export default {
   opacity: 0;
 }
 
-.test-select {
+.train-select {
   width: 100%;
   height: 100%;
   position: relative;

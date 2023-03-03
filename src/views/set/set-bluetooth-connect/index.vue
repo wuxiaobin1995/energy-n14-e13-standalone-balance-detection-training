@@ -1,25 +1,34 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-03-03 09:30:27
- * @LastEditTime: 2022-10-08 17:23:55
+ * @LastEditTime: 2023-03-03 17:03:46
  * @Description : 蓝牙连接
 -->
 <template>
   <div class="set-bluetooth-connect">
-    <div class="btn">
-      <el-button
-        class="btn__connect"
-        type="success"
-        :loading="bluetoothLoading"
-        @click="handleConnectBluetooth"
-        >连 接 蓝 牙</el-button
-      >
-    </div>
+    <div class="wrapper">
+      <el-page-header
+        class="page"
+        title="返回首页"
+        content="蓝牙连接"
+        @back="handleToHome"
+      ></el-page-header>
 
-    <div class="btn">
-      <el-button class="btn__refresh" type="info" @click="handleRefresh"
-        >刷 新 页 面</el-button
-      >
+      <div class="btn">
+        <el-button
+          class="item"
+          type="success"
+          :loading="bluetoothLoading"
+          @click="handleConnectBluetooth"
+          >连 接 蓝 牙</el-button
+        >
+      </div>
+
+      <div class="btn">
+        <el-button class="item" type="info" @click="handleRefresh"
+          >刷 新 页 面</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +71,15 @@ export default {
   },
 
   methods: {
+    /**
+     * @description: 回到首页
+     */
+    handleToHome() {
+      this.$router.push({
+        path: '/home'
+      })
+    },
+
     /**
      * @description: 初始化串口对象
      */
@@ -139,7 +157,7 @@ export default {
                         confirmButtonText: '确 定',
                         callback: () => {
                           this.$router.push({
-                            path: '/calibrate-zero'
+                            path: '/set-zero'
                           })
                         }
                       }
@@ -197,9 +215,7 @@ export default {
                 this.handleRefresh()
               })
               .catch(() => {
-                this.$router.push({
-                  path: '/home'
-                })
+                this.handleToHome()
               })
           }
         })
@@ -222,9 +238,7 @@ export default {
               this.handleRefresh()
             })
             .catch(() => {
-              this.$router.push({
-                path: '/home'
-              })
+              this.handleToHome()
             })
         })
     },
@@ -269,13 +283,27 @@ export default {
   height: 100%;
   @include flex(column, center, center);
 
-  .btn {
-    margin: 20px 0;
-    .btn__connect {
-      font-size: 30px;
+  .wrapper {
+    width: 86%;
+    height: 90%;
+    border-radius: 34px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
+    padding: 40px;
+    @include flex(column, center, center);
+    position: relative;
+
+    .page {
+      position: absolute;
+      top: 20px;
+      left: 30px;
     }
-    .btn__refresh {
-      font-size: 30px;
+
+    .btn {
+      margin: 20px 0;
+      .item {
+        font-size: 30px;
+      }
     }
   }
 }

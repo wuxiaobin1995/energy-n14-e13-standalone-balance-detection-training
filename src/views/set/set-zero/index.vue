@@ -1,26 +1,35 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-04-20 10:48:12
- * @LastEditTime: 2023-03-02 14:46:21
+ * @LastEditTime: 2023-03-03 17:11:24
  * @Description : 校准调零页面
 -->
 <template>
   <div class="set-zero">
-    <div class="text">在圆盘尽可能处于水平静止的前提下，点击“调零”按钮！</div>
-    <div class="show">
-      <div class="show__item">
-        x轴方向基准值：{{ xStandard === null ? '未调零' : xStandard }}
+    <div class="wrapper">
+      <el-page-header
+        class="page"
+        title="返回首页"
+        content="校准调零"
+        @back="handleToHome"
+      ></el-page-header>
+
+      <div class="text">在圆盘尽可能处于水平静止的前提下，点击“调零”按钮！</div>
+      <div class="show">
+        <div class="show__item">
+          x轴方向基准值：{{ xStandard === null ? '未调零' : xStandard }}
+        </div>
+        <div class="show__item">
+          y轴方向基准值：{{ yStandard === null ? '未调零' : yStandard }}
+        </div>
       </div>
-      <div class="show__item">
-        y轴方向基准值：{{ yStandard === null ? '未调零' : yStandard }}
-      </div>
+      <el-button class="btn__zero" type="primary" @click="handleSetZero"
+        >调 零</el-button
+      >
+      <el-button class="btn__refresh" type="info" @click="handleRefresh"
+        >刷 新</el-button
+      >
     </div>
-    <el-button class="btn-zero" type="primary" @click="handleSetZero"
-      >调 零</el-button
-    >
-    <el-button class="btn__refresh" type="info" @click="handleRefresh"
-      >刷 新</el-button
-    >
   </div>
 </template>
 
@@ -60,6 +69,15 @@ export default {
   },
 
   methods: {
+    /**
+     * @description: 回到首页
+     */
+    handleToHome() {
+      this.$router.push({
+        path: '/home'
+      })
+    },
+
     /**
      * @description: 初始化串口对象
      */
@@ -179,9 +197,7 @@ export default {
                 this.handleRefresh()
               })
               .catch(() => {
-                this.$router.push({
-                  path: '/home'
-                })
+                this.handleToHome()
               })
           }
         })
@@ -204,9 +220,7 @@ export default {
               this.handleRefresh()
             })
             .catch(() => {
-              this.$router.push({
-                path: '/home'
-              })
+              this.handleToHome()
             })
         })
     },
@@ -246,27 +260,44 @@ export default {
   height: 100%;
   @include flex(column, center, center);
 
-  .text {
-    font-size: 38px;
-    margin-bottom: 100px;
-    color: red;
-  }
+  .wrapper {
+    width: 86%;
+    height: 90%;
+    border-radius: 34px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
+    padding: 40px;
+    @include flex(column, center, center);
+    position: relative;
 
-  .show {
-    width: 50%;
-    @include flex(row, space-between, center);
-    margin-bottom: 100px;
-    .show__item {
-      font-size: 24px;
+    .page {
+      position: absolute;
+      top: 20px;
+      left: 30px;
     }
-  }
 
-  .btn-zero {
-    font-size: 42px;
-    margin-bottom: 40px;
-  }
-  .btn__refresh {
-    font-size: 42px;
+    .text {
+      font-size: 38px;
+      margin-bottom: 100px;
+      color: red;
+    }
+
+    .show {
+      width: 50%;
+      @include flex(row, space-between, center);
+      margin-bottom: 100px;
+      .show__item {
+        font-size: 24px;
+      }
+    }
+
+    .btn__zero {
+      font-size: 42px;
+      margin-bottom: 40px;
+    }
+    .btn__refresh {
+      font-size: 42px;
+    }
   }
 }
 </style>

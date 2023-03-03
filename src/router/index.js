@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2023-03-02 17:50:33
+ * @LastEditTime: 2023-03-03 16:10:11
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -90,208 +90,248 @@ const routes = [
         name: 'set-developer',
         component: () => import('@/views/set/set-developer'),
         meta: ['开发者']
+      },
+
+      /* 测试模块 */
+      // 测试项目选择
+      {
+        path: 'test-select',
+        name: 'test-select',
+        component: () => import('@/views/test-mode'),
+        meta: ['测试项目选择'],
+        redirect: '/test-select/static-balance-set',
+        children: [
+          // 静态平衡测试
+          {
+            path: 'static-balance-set',
+            name: 'static-balance-set',
+            component: () => import('@/views/test-mode/static-balance/set'),
+            meta: ['静态平衡测试']
+          },
+          // 动态平衡测试
+          {
+            path: 'dynamic-balance-set',
+            name: 'dynamic-balance-set',
+            component: () => import('@/views/test-mode/dynamic-balance/set'),
+            meta: ['动态平衡测试']
+          }
+        ]
+      },
+      // 静态平衡测试-测前体验
+      {
+        path: 'test-static-balance-experience',
+        name: 'test-static-balance-experience',
+        component: () => import('@/views/test-mode/static-balance/experience'),
+        meta: ['静态平衡测试-测前体验']
+      },
+      // 静态平衡测试-测量
+      {
+        path: 'static-balance-test-measure',
+        name: 'static-balance-test-measure',
+        component: () => import('@/views/test-mode/static-balance/measure'),
+        meta: ['静态平衡测试-测量']
+      },
+      // 动态平衡测试-测前体验1
+      {
+        path: 'dynamic-balance-test-experience-one',
+        name: 'dynamic-balance-test-experience-one',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/experience/one'),
+        meta: ['动态平衡测试-测前体验1']
+      },
+      // 动态平衡测试-测前体验2
+      {
+        path: 'dynamic-balance-test-experience-two',
+        name: 'dynamic-balance-test-experience-two',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/experience/two'),
+        meta: ['动态平衡测试-测前体验2']
+      },
+      // 动态平衡测试-测前体验3
+      {
+        path: 'dynamic-balance-test-experience-three',
+        name: 'dynamic-balance-test-experience-three',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/experience/three'),
+        meta: ['动态平衡测试-测前体验3']
+      },
+      // 动态平衡测试-测量1
+      {
+        path: 'dynamic-balance-test-measure-one',
+        name: 'dynamic-balance-test-measure-one',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/measure/one'),
+        meta: ['动态平衡测试-测量1']
+      },
+      // 动态平衡测试-测量2
+      {
+        path: 'dynamic-balance-test-measure-two',
+        name: 'dynamic-balance-test-measure-two',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/measure/two'),
+        meta: ['动态平衡测试-测量2']
+      },
+      // 动态平衡测试-测量3
+      {
+        path: 'dynamic-balance-test-measure-three',
+        name: 'dynamic-balance-test-measure-three',
+        component: () =>
+          import('@/views/test-mode/dynamic-balance/measure/three'),
+        meta: ['动态平衡测试-测量3']
+      },
+
+      /* 训练模块 */
+      // 训练项目选择
+      {
+        path: 'train-select',
+        name: 'train-select',
+        component: () => import('@/views/train-mode'),
+        meta: ['训练项目选择'],
+        redirect: '/train-select/ring-hold-set',
+        children: [
+          // 圆环保持训练
+          {
+            path: 'ring-hold-set',
+            name: 'ring-hold-set',
+            component: () => import('@/views/train-mode/ring-hold/set'),
+            meta: ['圆环保持训练']
+          },
+          // 圆圈保持训练
+          {
+            path: 'circle-hold-set',
+            name: 'circle-hold-set',
+            component: () => import('@/views/train-mode/circle-hold/set'),
+            meta: ['圆圈保持训练']
+          }
+        ]
+      },
+      // 圆环保持训练-测量
+      {
+        path: 'ring-hold-train-measure',
+        name: 'ring-hold-train-measure',
+        component: () => import('@/views/train-mode/ring-hold/measure'),
+        meta: ['圆环保持训练-测量']
+      },
+      // 圆圈保持训练-测量
+      {
+        path: 'circle-hold-train-measure',
+        name: 'circle-hold-train-measure',
+        component: () => import('@/views/train-mode/circle-hold/measure'),
+        meta: ['圆圈保持训练-测量']
+      },
+
+      /* 数据记录 */
+      // 测试
+      {
+        path: 'test-record',
+        name: 'test-record',
+        component: () => import('@/views/record/test'),
+        meta: ['测试-数据记录'],
+        redirect: '/test-record/static-balance',
+        children: [
+          // 静态平衡测试
+          {
+            path: 'static-balance',
+            name: 'static-balance',
+            component: () => import('@/views/record/test/static-balance'),
+            meta: ['静态平衡测试']
+          },
+          // 动态平衡测试
+          {
+            path: 'dynamic-balance',
+            name: 'dynamic-balance',
+            component: () => import('@/views/record/test/dynamic-balance'),
+            meta: ['动态平衡测试']
+          }
+        ]
+      },
+      // 训练
+      {
+        path: 'train-record',
+        name: 'train-record',
+        component: () => import('@/views/record/train'),
+        meta: ['训练-数据记录'],
+        redirect: '/train-record/ring-hold',
+        children: [
+          // 圆环保持训练
+          {
+            path: 'ring-hold',
+            name: 'ring-hold',
+            component: () => import('@/views/record/train/ring-hold'),
+            meta: ['圆环保持训练']
+          },
+          // 圆圈保持训练
+          {
+            path: 'circle-hold',
+            name: 'circle-hold',
+            component: () => import('@/views/record/train/circle-hold'),
+            meta: ['圆圈保持训练']
+          }
+        ]
       }
     ]
   },
 
-  /* 测试模式 */
-  // 静态平衡测试-参数设置
-  {
-    path: 'static-balance-test-set',
-    name: 'static-balance-test-set',
-    component: () => import('@/views/test-mode/static-balance-test/set'),
-    meta: ['静态平衡测试-参数设置']
-  },
-  // 静态平衡测试-测前体验
-  {
-    path: 'static-balance-test-experience',
-    name: 'static-balance-test-experience',
-    component: () => import('@/views/test-mode/static-balance-test/experience'),
-    meta: ['静态平衡测试-测前体验']
-  },
-  // 静态平衡测试-测量
-  {
-    path: 'static-balance-test-measure',
-    name: 'static-balance-test-measure',
-    component: () => import('@/views/test-mode/static-balance-test/measure'),
-    meta: ['静态平衡测试-测量']
-  },
+  /* 测试报告 */
   // 静态平衡测试-PDF报告
   {
-    path: 'static-balance-test-pdf',
+    path: '/static-balance-test-pdf',
     name: 'static-balance-test-pdf',
-    component: () => import('@/views/test-mode/static-balance-test/pdf'),
+    component: () => import('@/views/test-mode/static-balance/pdf'),
     meta: ['静态平衡测试-PDF报告']
-  },
-  // 动态平衡测试-参数设置
-  {
-    path: 'dynamic-balance-test-set',
-    name: 'dynamic-balance-test-set',
-    component: () => import('@/views/test-mode/dynamic-balance-test/set'),
-    meta: ['动态平衡测试']
-  },
-  // 动态平衡测试-测前体验1
-  {
-    path: 'dynamic-balance-test-experience-one',
-    name: 'dynamic-balance-test-experience-one',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/experience/one'),
-    meta: ['动态平衡测试-测前体验1']
-  },
-  // 动态平衡测试-测前体验2
-  {
-    path: 'dynamic-balance-test-experience-two',
-    name: 'dynamic-balance-test-experience-two',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/experience/two'),
-    meta: ['动态平衡测试-测前体验2']
-  },
-  // 动态平衡测试-测前体验3
-  {
-    path: 'dynamic-balance-test-experience-three',
-    name: 'dynamic-balance-test-experience-three',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/experience/three'),
-    meta: ['动态平衡测试-测前体验3']
-  },
-  // 动态平衡测试-测量1
-  {
-    path: 'dynamic-balance-test-measure-one',
-    name: 'dynamic-balance-test-measure-one',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/measure/one'),
-    meta: ['动态平衡测试-测量1']
-  },
-  // 动态平衡测试-测量2
-  {
-    path: 'dynamic-balance-test-measure-two',
-    name: 'dynamic-balance-test-measure-two',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/measure/two'),
-    meta: ['动态平衡测试-测量2']
-  },
-  // 动态平衡测试-测量3
-  {
-    path: 'dynamic-balance-test-measure-three',
-    name: 'dynamic-balance-test-measure-three',
-    component: () =>
-      import('@/views/test-mode/dynamic-balance-test/measure/three'),
-    meta: ['动态平衡测试-测量3']
-  },
-  // 动态平衡测试-PDF报告
-  {
-    path: 'dynamic-balance-test-pdf',
-    name: 'dynamic-balance-test-pdf',
-    component: () => import('@/views/test-mode/dynamic-balance-test/pdf'),
-    meta: ['动态平衡测试-PDF报告']
-  },
-
-  /* 训练模式 */
-  // 圆环保持训练-参数设置
-  {
-    path: 'ring-hold-train-set',
-    name: 'ring-hold-train-set',
-    component: () => import('@/views/train-mode/ring-hold-train/set'),
-    meta: ['圆环保持训练-参数设置']
-  },
-  // 圆环保持训练-测量
-  {
-    path: 'ring-hold-train-measure',
-    name: 'ring-hold-train-measure',
-    component: () => import('@/views/train-mode/ring-hold-train/measure'),
-    meta: ['圆环保持训练-测量']
-  },
-  // 圆环保持训练-PDF报告
-  {
-    path: 'ring-hold-train-pdf',
-    name: 'ring-hold-train-pdf',
-    component: () => import('@/views/train-mode/ring-hold-train/pdf'),
-    meta: ['圆环保持训练-PDF报告']
-  },
-  // 圆圈保持训练-参数设置
-  {
-    path: 'circle-hold-train-set',
-    name: 'circle-hold-train-set',
-    component: () => import('@/views/train-mode/circle-hold-train/set'),
-    meta: ['圆圈保持训练-参数设置']
-  },
-  // 圆圈保持训练-测量
-  {
-    path: 'circle-hold-train-measure',
-    name: 'circle-hold-train-measure',
-    component: () => import('@/views/train-mode/circle-hold-train/measure'),
-    meta: ['圆圈保持训练-测量']
-  },
-  // 圆圈保持训练-PDF报告
-  {
-    path: 'circle-hold-train-pdf',
-    name: 'circle-hold-train-pdf',
-    component: () => import('@/views/train-mode/circle-hold-train/pdf'),
-    meta: ['圆圈保持训练-PDF报告']
-  },
-
-  /* 数据记录 */
-  /* 测试 */
-  // 静态平衡测试-数据记录
-  {
-    path: 'static-balance-test-record',
-    name: 'static-balance-test-record',
-    component: () => import('@/views/test-record/static-balance-test'),
-    meta: ['静态平衡测试-数据记录']
   },
   // 静态平衡测试-长期趋势报告
   {
-    path: 'static-balance-test-secular-trend-pdf',
+    path: '/static-balance-test-secular-trend-pdf',
     name: 'static-balance-test-secular-trend-pdf',
     component: () =>
-      import('@/views/test-record/static-balance-test/secular-trend-pdf'),
+      import('@/views/record/test/static-balance/secular-trend-pdf'),
     meta: ['静态平衡测试-长期趋势报告']
   },
-  // 动态平衡测试-数据记录
+  // 动态平衡测试-PDF报告
   {
-    path: 'dynamic-balance-test-record',
-    name: 'dynamic-balance-test-record',
-    component: () => import('@/views/test-record/dynamic-balance-test'),
-    meta: ['动态平衡测试-数据记录']
+    path: '/dynamic-balance-test-pdf',
+    name: 'dynamic-balance-test-pdf',
+    component: () => import('@/views/test-mode/dynamic-balance/pdf'),
+    meta: ['动态平衡测试-PDF报告']
   },
   // 动态平衡测试-长期趋势报告
   {
-    path: 'dynamic-balance-test-secular-trend-pdf',
+    path: '/dynamic-balance-test-secular-trend-pdf',
     name: 'dynamic-balance-test-secular-trend-pdf',
     component: () =>
-      import('@/views/test-record/dynamic-balance-test/secular-trend-pdf'),
+      import('@/views/record/test/dynamic-balance/secular-trend-pdf'),
     meta: ['动态平衡测试-长期趋势报告']
   },
 
-  /* 训练 */
-  // 圆环保持训练-数据记录
+  /* 训练报告 */
+  // 圆环保持训练-PDF报告
   {
-    path: 'ring-hold-train-record',
-    name: 'ring-hold-train-record',
-    component: () => import('@/views/train-record/ring-hold-train'),
-    meta: ['圆环保持训练-数据记录']
+    path: '/ring-hold-train-pdf',
+    name: 'ring-hold-train-pdf',
+    component: () => import('@/views/train-mode/ring-hold/pdf'),
+    meta: ['圆环保持训练-PDF报告']
   },
   // 圆环保持训练-长期趋势报告
   {
-    path: 'ring-hold-train-secular-trend-pdf',
+    path: '/ring-hold-train-secular-trend-pdf',
     name: 'ring-hold-train-secular-trend-pdf',
-    component: () =>
-      import('@/views/train-record/ring-hold-train/secular-trend-pdf'),
+    component: () => import('@/views/record/train/ring-hold/secular-trend-pdf'),
     meta: ['圆环保持训练-长期趋势报告']
   },
-  // 圆圈保持训练-数据记录
+  // 圆圈保持训练-PDF报告
   {
-    path: 'circle-hold-train-record',
-    name: 'circle-hold-train-record',
-    component: () => import('@/views/train-record/circle-hold-train'),
-    meta: ['圆圈保持训练-数据记录']
+    path: '/circle-hold-train-pdf',
+    name: 'circle-hold-train-pdf',
+    component: () => import('@/views/train-mode/circle-hold/pdf'),
+    meta: ['圆圈保持训练-PDF报告']
   },
   // 圆圈保持训练-长期趋势报告
   {
-    path: 'circle-hold-train-secular-trend-pdf',
+    path: '/circle-hold-train-secular-trend-pdf',
     name: 'circle-hold-train-secular-trend-pdf',
     component: () =>
-      import('@/views/train-record/circle-hold-train/secular-trend-pdf'),
+      import('@/views/record/train/circle-hold/secular-trend-pdf'),
     meta: ['圆圈保持训练-长期趋势报告']
   },
 

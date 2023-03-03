@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 21:45:13
- * @LastEditTime: 2023-03-02 11:57:45
+ * @LastEditTime: 2023-03-03 17:16:32
  * @Description : 开发者页面
 -->
 <template>
@@ -129,7 +129,7 @@ export default {
     }
 
     .set-boundaryAngle {
-      margin-top: 50px;
+      margin-top: 70px;
       @include flex(row, center, center);
     }
   }

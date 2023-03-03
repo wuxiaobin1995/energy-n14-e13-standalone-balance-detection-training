@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-07-28 10:25:39
- * @LastEditTime: 2023-03-02 10:38:05
+ * @LastEditTime: 2023-03-03 17:14:29
  * @Description : 顶部栏
 -->
 <template>
@@ -14,7 +14,7 @@
         fit="scale-down"
         @click.native="handleToHome"
       ></el-image>
-      <span class="text">下蹲与控制反馈系统训练仪软件-单机版 v2.0.0</span>
+      <span class="text">平衡能力检测与训练软件-单机版 v2.0.0</span>
     </div>
 
     <!-- 蓝牙连接状态 -->
@@ -113,25 +113,24 @@ export default {
           })
           break
         case '调零':
-          this.$router.push({
-            path: '/set-zero'
-          })
-          break
-        case '开发者':
-          this.$prompt('请输入密码', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            inputPattern: /^htpm$/,
-            inputErrorMessage: '密码不正确',
-            showClose: true,
-            closeOnClickModal: false
-          })
-            .then(() => {
-              this.$router.push({
-                path: '/set-developer'
-              })
+          if (this.$store.state.isBluetooth) {
+            this.$router.push({
+              path: '/set-zero'
             })
-            .catch(() => {})
+          } else {
+            this.$confirm(`检测到您还没有连接蓝牙！`, '提示', {
+              type: 'warning',
+              center: true,
+              showCancelButton: false,
+              confirmButtonText: '前去连接'
+            })
+              .then(() => {
+                this.$router.push({
+                  path: '/set-bluetooth-connect'
+                })
+              })
+              .catch(() => {})
+          }
           break
         case '数据迁移':
           this.$prompt('请输入密码', '提示', {
@@ -149,6 +148,23 @@ export default {
             })
             .catch(() => {})
           break
+        case '开发者':
+          this.$prompt('请输入密码', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            inputPattern: /^htpm$/,
+            inputErrorMessage: '密码不正确',
+            showClose: true,
+            closeOnClickModal: false
+          })
+            .then(() => {
+              this.$router.push({
+                path: '/set-developer'
+              })
+            })
+            .catch(() => {})
+          break
+
         default:
           this.$message({
             message: '不存在此路由，请联系开发人员！',
