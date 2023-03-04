@@ -1,71 +1,73 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-30 09:38:43
- * @LastEditTime: 2022-07-26 15:01:56
+ * @LastEditTime: 2023-03-04 10:52:14
  * @Description : 动态平衡测试-测量1
 -->
 <template>
-  <div class="dynamic-balance-test-measure-one">
-    <!-- 标题 -->
-    <div class="title">动态平衡测试</div>
+  <div class="test-dynamic-balance-measure-one">
+    <div class="wrapper">
+      <!-- 标题 -->
+      <div class="title">动态平衡测试</div>
 
-    <!-- 测试类型 -->
-    <div class="type">测试内容：左右重心转移</div>
+      <!-- 测试类型 -->
+      <div class="type">测试内容：左右重心转移</div>
 
-    <!-- 主体 -->
-    <div class="main">
-      <!-- 参数 -->
-      <div class="parameter">
-        <div class="parameter__visual">
-          视觉反馈：{{ isVisual === true ? '有' : '无' }}
+      <!-- 主体 -->
+      <div class="main">
+        <!-- 参数 -->
+        <div class="parameter">
+          <div class="parameter__visual">
+            视觉反馈：{{ isVisual === true ? '有' : '无' }}
+          </div>
+          <div class="parameter__barycenter">
+            重心轨迹：{{ isBarycenter === true ? '有' : '无' }}
+          </div>
+          <div class="parameter__time">测试时长：{{ testTime }}秒</div>
         </div>
-        <div class="parameter__barycenter">
-          重心轨迹：{{ isBarycenter === true ? '有' : '无' }}
+
+        <!-- 图形区 -->
+        <div class="chart" v-show="isVisual">
+          <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
         </div>
-        <div class="parameter__time">测试时长：{{ testTime }}秒</div>
+
+        <!-- 倒计时 -->
+        <div class="count-down">
+          <div class="count-down__text">倒 计 时</div>
+          <div class="count-down__nowTime">{{ nowTime }} S</div>
+        </div>
       </div>
 
-      <!-- 图形区 -->
-      <div class="chart" v-show="isVisual">
-        <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
+      <!-- 按钮组 -->
+      <div class="btn">
+        <el-button
+          class="item"
+          :disabled="isStarting"
+          round
+          type="primary"
+          @click="handleStart"
+          >开始测试</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isStarting"
+          round
+          type="danger"
+          @click="handleFinish"
+          >结束测试</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isFinish"
+          round
+          type="success"
+          @click="handleToNext"
+          >下一项</el-button
+        >
+        <el-button class="item" round type="info" @click="handleGoBack"
+          >返回</el-button
+        >
       </div>
-
-      <!-- 倒计时 -->
-      <div class="count-down">
-        <div class="count-down__text">倒 计 时</div>
-        <div class="count-down__nowTime">{{ nowTime }} S</div>
-      </div>
-    </div>
-
-    <!-- 按钮组 -->
-    <div class="btn">
-      <el-button
-        class="btn__item"
-        :disabled="isStarting"
-        round
-        type="primary"
-        @click="handleStart"
-        >开始测试</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isStarting"
-        round
-        type="danger"
-        @click="handleFinish"
-        >结束测试</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isFinish"
-        round
-        type="success"
-        @click="handleToNext"
-        >下一项</el-button
-      >
-      <el-button class="btn__item" round type="info" @click="handleGoBack"
-        >返回</el-button
-      >
     </div>
   </div>
 </template>
@@ -79,7 +81,7 @@ import SerialPort from 'serialport'
 import Readline from '@serialport/parser-readline'
 
 export default {
-  name: 'dynamic-balance-test-measure-one',
+  name: 'test-dynamic-balance-measure-one',
 
   data() {
     return {
@@ -328,7 +330,6 @@ export default {
      * @description: 保存数据逻辑函数
      */
     saveData() {
-      // 清除计时器
       if (this.timeClock) {
         clearInterval(this.timeClock)
       }
@@ -341,18 +342,18 @@ export default {
       // 数据暂存到sessionStorage中
       const sessionData = JSON.stringify(this.trackArray)
       window.sessionStorage.setItem(
-        'dynamic-balance-test-measure-one',
+        'test-dynamic-balance-measure-one',
         sessionData
       )
       const getSessionData = JSON.parse(
-        window.sessionStorage.getItem('dynamic-balance-test-measure-one')
+        window.sessionStorage.getItem('test-dynamic-balance-measure-one')
       )
       if (getSessionData.length) {
         this.isFinish = true
         this.$message({
           message: '数据暂存成功',
           type: 'success',
-          duration: 2500
+          duration: 1500
         })
       } else {
         this.isFinish = false
@@ -367,8 +368,9 @@ export default {
      * @description: 开始测试
      */
     handleStart() {
-      this.isFinish = false
       this.isStarting = true
+      this.isFinish = false
+      this.timeClock = null
       this.nowTime = this.testTime
       this.trackArray = []
 
@@ -401,7 +403,7 @@ export default {
      */
     handleToNext() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-experience-two',
+        path: '/test-dynamic-balance-experience-two',
         query: {
           testTime: JSON.stringify(this.testTime), // 测试时长
           isVisual: JSON.stringify(this.isVisual), // 是否开启视觉反馈
@@ -415,7 +417,7 @@ export default {
      */
     handleGoBack() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-set'
+        path: '/test-select/dynamic-balance-set'
       })
     },
 
@@ -432,75 +434,84 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test-measure-one {
+.test-dynamic-balance-measure-one {
   width: 100%;
   height: 100%;
-  padding: 20px 100px;
-  @include flex(column, stretch, stretch);
+  @include flex(row, center, center);
 
-  /* 标题 */
-  .title {
-    font-size: 36px;
-    color: green;
-  }
+  .wrapper {
+    width: 96%;
+    height: 96%;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
+    @include flex(column, stretch, stretch);
+    padding: 20px 100px;
 
-  /* 测试类型 */
-  .type {
-    margin-top: 20px;
-    font-size: 22px;
-  }
+    /* 标题 */
+    .title {
+      font-size: 36px;
+      color: green;
+    }
 
-  /* 主体 */
-  .main {
-    flex: 1;
-    @include flex(row, space-between, center);
-    // 参数
-    .parameter {
-      width: 20%;
-      .parameter__visual {
-        font-size: 22px;
+    /* 测试类型 */
+    .type {
+      margin-top: 20px;
+      font-size: 22px;
+    }
+
+    /* 主体 */
+    .main {
+      flex: 1;
+      @include flex(row, space-between, center);
+      // 参数
+      .parameter {
+        width: 20%;
+        .parameter__visual {
+          font-size: 22px;
+        }
+        .parameter__barycenter {
+          margin-top: 100px;
+          font-size: 22px;
+        }
+        .parameter__time {
+          margin-top: 100px;
+          font-size: 22px;
+        }
       }
-      .parameter__barycenter {
-        margin-top: 100px;
-        font-size: 22px;
+
+      // 图形区
+      .chart {
+        width: 30vw;
+        height: 63vh;
       }
-      .parameter__time {
-        margin-top: 100px;
-        font-size: 22px;
+
+      // 倒计时
+      .count-down {
+        width: 20%;
+        @include flex(column, center, center);
+        .count-down__text {
+          font-size: 28px;
+        }
+        .count-down__nowTime {
+          margin-top: 10px;
+          padding: 4px 0;
+          width: 100px;
+          background-color: rgb(112, 173, 71);
+          @include flex(row, center, center);
+          font-size: 28px;
+          color: #ffffff;
+        }
       }
     }
 
-    // 图形区
-    .chart {
-      width: 30vw;
-      height: 63vh;
-    }
-
-    // 倒计时
-    .count-down {
-      width: 20%;
-      @include flex(column, center, center);
-      .count-down__text {
-        font-size: 28px;
+    /* 按钮组 */
+    .btn {
+      @include flex(row, center, center);
+      .item {
+        font-size: 30px;
+        margin: 0 40px;
       }
-      .count-down__nowTime {
-        margin-top: 10px;
-        padding: 4px 0;
-        width: 100px;
-        background-color: rgb(112, 173, 71);
-        @include flex(row, center, center);
-        font-size: 28px;
-        color: #ffffff;
-      }
-    }
-  }
-
-  /* 按钮组 */
-  .btn {
-    @include flex(row, center, center);
-    .btn__item {
-      font-size: 30px;
-      margin: 0 40px;
     }
   }
 }

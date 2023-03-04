@@ -6,7 +6,7 @@
 -->
 <template>
   <div
-    class="dynamic-balance-test-secular-trend-pdf"
+    class="test-dynamic-balance-secular-trend-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- PDF区域 -->
@@ -25,10 +25,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="primary" @click="handlePrint"
+      <el-button class="item" type="primary" @click="handlePrint"
         >保存PDF</el-button
       >
-      <el-button class="btn__item" type="success" plain @click="handleGoBack"
+      <el-button class="item" type="success" plain @click="handleGoBack"
         >返回</el-button
       >
     </div>
@@ -39,12 +39,14 @@
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'dynamic-balance-test-secular-trend-pdf',
+  name: 'test-dynamic-balance-secular-trend-pdf',
 
   data() {
     return {
       /* 路由传参 */
+      userId: JSON.parse(this.$route.query.userId),
       routerName: JSON.parse(this.$route.query.routerName),
+      type: JSON.parse(this.$route.query.type),
 
       /* 图形相关变量 */
       myChart: null,
@@ -86,8 +88,8 @@ export default {
       this.fullscreenLoading = true
       db.test_data
         .where({
-          userId: this.$store.state.currentUserInfo.userId,
-          type: '动态平衡测试'
+          userId: this.userId,
+          type: this.type
         })
         .toArray()
         .then(res => {
@@ -277,7 +279,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test-secular-trend-pdf {
+.test-dynamic-balance-secular-trend-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -307,7 +309,7 @@ export default {
   .btn {
     @include flex(row, center, center);
     margin: 20px 0;
-    .btn__item {
+    .item {
       font-size: 28px;
       margin: 0 40px;
     }

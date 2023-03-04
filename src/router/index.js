@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2023-03-03 16:10:11
+ * @LastEditTime: 2023-03-04 11:20:20
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -126,55 +126,55 @@ const routes = [
       },
       // 静态平衡测试-测量
       {
-        path: 'static-balance-test-measure',
-        name: 'static-balance-test-measure',
+        path: 'test-static-balance-measure',
+        name: 'test-static-balance-measure',
         component: () => import('@/views/test-mode/static-balance/measure'),
         meta: ['静态平衡测试-测量']
       },
       // 动态平衡测试-测前体验1
       {
-        path: 'dynamic-balance-test-experience-one',
-        name: 'dynamic-balance-test-experience-one',
+        path: 'test-dynamic-balance-experience-one',
+        name: 'test-dynamic-balance-experience-one',
         component: () =>
           import('@/views/test-mode/dynamic-balance/experience/one'),
         meta: ['动态平衡测试-测前体验1']
       },
       // 动态平衡测试-测前体验2
       {
-        path: 'dynamic-balance-test-experience-two',
-        name: 'dynamic-balance-test-experience-two',
+        path: 'test-dynamic-balance-experience-two',
+        name: 'test-dynamic-balance-experience-two',
         component: () =>
           import('@/views/test-mode/dynamic-balance/experience/two'),
         meta: ['动态平衡测试-测前体验2']
       },
       // 动态平衡测试-测前体验3
       {
-        path: 'dynamic-balance-test-experience-three',
-        name: 'dynamic-balance-test-experience-three',
+        path: 'test-dynamic-balance-experience-three',
+        name: 'test-dynamic-balance-experience-three',
         component: () =>
           import('@/views/test-mode/dynamic-balance/experience/three'),
         meta: ['动态平衡测试-测前体验3']
       },
       // 动态平衡测试-测量1
       {
-        path: 'dynamic-balance-test-measure-one',
-        name: 'dynamic-balance-test-measure-one',
+        path: 'test-dynamic-balance-measure-one',
+        name: 'test-dynamic-balance-measure-one',
         component: () =>
           import('@/views/test-mode/dynamic-balance/measure/one'),
         meta: ['动态平衡测试-测量1']
       },
       // 动态平衡测试-测量2
       {
-        path: 'dynamic-balance-test-measure-two',
-        name: 'dynamic-balance-test-measure-two',
+        path: 'test-dynamic-balance-measure-two',
+        name: 'test-dynamic-balance-measure-two',
         component: () =>
           import('@/views/test-mode/dynamic-balance/measure/two'),
         meta: ['动态平衡测试-测量2']
       },
       // 动态平衡测试-测量3
       {
-        path: 'dynamic-balance-test-measure-three',
-        name: 'dynamic-balance-test-measure-three',
+        path: 'test-dynamic-balance-measure-three',
+        name: 'test-dynamic-balance-measure-three',
         component: () =>
           import('@/views/test-mode/dynamic-balance/measure/three'),
         meta: ['动态平衡测试-测量3']
@@ -207,15 +207,15 @@ const routes = [
       },
       // 圆环保持训练-测量
       {
-        path: 'ring-hold-train-measure',
-        name: 'ring-hold-train-measure',
+        path: 'train-ring-hold-measure',
+        name: 'train-ring-hold-measure',
         component: () => import('@/views/train-mode/ring-hold/measure'),
         meta: ['圆环保持训练-测量']
       },
       // 圆圈保持训练-测量
       {
-        path: 'circle-hold-train-measure',
-        name: 'circle-hold-train-measure',
+        path: 'train-circle-hold-measure',
+        name: 'train-circle-hold-measure',
         component: () => import('@/views/train-mode/circle-hold/measure'),
         meta: ['圆圈保持训练-测量']
       },
@@ -275,30 +275,30 @@ const routes = [
   /* 测试报告 */
   // 静态平衡测试-PDF报告
   {
-    path: '/static-balance-test-pdf',
-    name: 'static-balance-test-pdf',
+    path: '/test-static-balance-pdf',
+    name: 'test-static-balance-pdf',
     component: () => import('@/views/test-mode/static-balance/pdf'),
     meta: ['静态平衡测试-PDF报告']
   },
   // 静态平衡测试-长期趋势报告
   {
-    path: '/static-balance-test-secular-trend-pdf',
-    name: 'static-balance-test-secular-trend-pdf',
+    path: '/test-static-balance-secular-trend-pdf',
+    name: 'test-static-balance-secular-trend-pdf',
     component: () =>
       import('@/views/record/test/static-balance/secular-trend-pdf'),
     meta: ['静态平衡测试-长期趋势报告']
   },
   // 动态平衡测试-PDF报告
   {
-    path: '/dynamic-balance-test-pdf',
-    name: 'dynamic-balance-test-pdf',
+    path: '/test-dynamic-balance-pdf',
+    name: 'test-dynamic-balance-pdf',
     component: () => import('@/views/test-mode/dynamic-balance/pdf'),
     meta: ['动态平衡测试-PDF报告']
   },
   // 动态平衡测试-长期趋势报告
   {
-    path: '/dynamic-balance-test-secular-trend-pdf',
-    name: 'dynamic-balance-test-secular-trend-pdf',
+    path: '/test-dynamic-balance-secular-trend-pdf',
+    name: 'test-dynamic-balance-secular-trend-pdf',
     component: () =>
       import('@/views/record/test/dynamic-balance/secular-trend-pdf'),
     meta: ['动态平衡测试-长期趋势报告']
@@ -307,29 +307,29 @@ const routes = [
   /* 训练报告 */
   // 圆环保持训练-PDF报告
   {
-    path: '/ring-hold-train-pdf',
-    name: 'ring-hold-train-pdf',
+    path: '/train-ring-hold-pdf',
+    name: 'train-ring-hold-pdf',
     component: () => import('@/views/train-mode/ring-hold/pdf'),
     meta: ['圆环保持训练-PDF报告']
   },
   // 圆环保持训练-长期趋势报告
   {
-    path: '/ring-hold-train-secular-trend-pdf',
-    name: 'ring-hold-train-secular-trend-pdf',
+    path: '/train-ring-hold-secular-trend-pdf',
+    name: 'train-ring-hold-secular-trend-pdf',
     component: () => import('@/views/record/train/ring-hold/secular-trend-pdf'),
     meta: ['圆环保持训练-长期趋势报告']
   },
   // 圆圈保持训练-PDF报告
   {
-    path: '/circle-hold-train-pdf',
-    name: 'circle-hold-train-pdf',
+    path: '/train-circle-hold-pdf',
+    name: 'train-circle-hold-pdf',
     component: () => import('@/views/train-mode/circle-hold/pdf'),
     meta: ['圆圈保持训练-PDF报告']
   },
   // 圆圈保持训练-长期趋势报告
   {
-    path: '/circle-hold-train-secular-trend-pdf',
-    name: 'circle-hold-train-secular-trend-pdf',
+    path: '/train-circle-hold-secular-trend-pdf',
+    name: 'train-circle-hold-secular-trend-pdf',
     component: () =>
       import('@/views/record/train/circle-hold/secular-trend-pdf'),
     meta: ['圆圈保持训练-长期趋势报告']

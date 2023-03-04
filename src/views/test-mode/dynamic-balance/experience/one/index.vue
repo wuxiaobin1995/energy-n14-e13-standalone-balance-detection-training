@@ -1,41 +1,43 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-30 09:12:28
- * @LastEditTime: 2022-07-26 15:00:23
+ * @LastEditTime: 2023-03-04 09:33:09
  * @Description : 动态平衡测试-测前体验1
 -->
 <template>
-  <div class="dynamic-balance-test-experience-one">
-    <!-- 倒计时 -->
-    <div class="count-down">
-      <div class="count-down__text">倒 计 时</div>
-      <div class="count-down__nowTime">{{ nowTime }}</div>
-    </div>
+  <div class="test-dynamic-balance-experience-one">
+    <div class="wrapper">
+      <!-- 倒计时 -->
+      <div class="count-down">
+        <div class="count-down__text">倒 计 时</div>
+        <div class="count-down__nowTime">{{ nowTime }}</div>
+      </div>
 
-    <!-- 图形区 -->
-    <div class="chart">
-      <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
-    </div>
+      <!-- 图形区 -->
+      <div class="chart">
+        <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
+      </div>
 
-    <!-- 按钮组 -->
-    <div class="btn">
-      <el-button
-        class="btn__start"
-        type="primary"
-        :disabled="isStarting"
-        @click="handleStart"
-        >开始体验</el-button
-      >
-      <el-button class="btn__cancel" type="danger" @click="handleGoBack"
-        >返回参数配置页</el-button
-      >
-      <el-button
-        class="btn__toTest"
-        type="success"
-        :disabled="!isFinish"
-        @click="handleToMeasure"
-        >完成</el-button
-      >
+      <!-- 按钮组 -->
+      <div class="btn">
+        <el-button
+          class="item"
+          type="primary"
+          :disabled="isStarting"
+          @click="handleStart"
+          >开 始 体 验</el-button
+        >
+        <el-button class="item" type="danger" @click="handleGoBack"
+          >返 回</el-button
+        >
+        <el-button
+          class="item"
+          type="success"
+          :disabled="!isFinish"
+          @click="handleToMeasure"
+          >正 式 开 始</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -49,7 +51,7 @@ import SerialPort from 'serialport'
 import Readline from '@serialport/parser-readline'
 
 export default {
-  name: 'dynamic-balance-test-experience-one',
+  name: 'test-dynamic-balance-experience-one',
 
   data() {
     return {
@@ -329,11 +331,11 @@ export default {
     },
 
     /**
-     * @description: 返回参数配置页按钮
+     * @description: 返回
      */
     handleGoBack() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-set'
+        path: '/test-select/dynamic-balance-set'
       })
     },
 
@@ -342,7 +344,7 @@ export default {
      */
     handleToMeasure() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-measure-one',
+        path: '/test-dynamic-balance-measure-one',
         query: {
           testTime: JSON.stringify(this.testTime), // 测试时长
           isVisual: JSON.stringify(this.isVisual), // 是否开启视觉反馈
@@ -364,45 +366,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test-experience-one {
+.test-dynamic-balance-experience-one {
   width: 100%;
   height: 100%;
-  padding: 20px 100px 40px 100px;
-  @include flex(column, stretch, center);
+  @include flex(row, center, center);
 
-  /* 倒计时 */
-  .count-down {
-    padding: 4px 50px;
-    background-color: rgb(112, 173, 71);
+  .wrapper {
+    width: 96%;
+    height: 96%;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
     @include flex(column, center, center);
-    .count-down__text {
-      font-size: 34px;
-      color: #ffffff;
-    }
-    .count-down__nowTime {
-      font-size: 30px;
-      color: #ffffff;
-    }
-  }
 
-  /* 图形区 */
-  .chart {
-    width: 30vw;
-    height: 63vh;
-  }
+    /* 倒计时 */
+    .count-down {
+      padding: 4px 50px;
+      background-color: rgb(112, 173, 71);
+      @include flex(column, center, center);
+      .count-down__text {
+        font-size: 34px;
+        color: #ffffff;
+      }
+      .count-down__nowTime {
+        font-size: 30px;
+        color: #ffffff;
+      }
+    }
 
-  /* 按钮组 */
-  .btn {
-    @include flex(row, center, center);
-    .btn__start {
-      font-size: 24px;
+    /* 图形区 */
+    .chart {
+      width: 30vw;
+      height: 63vh;
     }
-    .btn__cancel {
-      font-size: 24px;
-      margin: 0 100px;
-    }
-    .btn__toTest {
-      font-size: 24px;
+
+    /* 按钮组 */
+    .btn {
+      @include flex(row, center, center);
+      .item {
+        font-size: 28px;
+        width: 190px;
+        margin: 0 50px;
+      }
     }
   }
 }

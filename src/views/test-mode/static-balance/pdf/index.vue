@@ -1,19 +1,21 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-22 20:06:59
- * @LastEditTime: 2022-09-12 19:53:59
+ * @LastEditTime: 2023-03-04 10:10:31
  * @Description : 静态平衡测试-PDF报告
 -->
 <template>
   <div
-    class="static-balance-test-pdf"
+    class="test-static-balance-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- 打印区域 -->
     <div id="pdf" class="pdf-wrapper">
       <!-- 大标题 -->
       <div class="top">
-        <div class="title">静态平衡测试报告</div>
+        <div class="title">
+          静态平衡测试报告({{ pdfData.hospital ? pdfData.hospital : '' }})
+        </div>
         <div class="logo">
           <el-image :src="logoSrc" fit="scale-down"></el-image>
         </div>
@@ -98,10 +100,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="primary" @click="handlePrint"
+      <el-button class="item" type="primary" @click="handlePrint"
         >保存PDF</el-button
       >
-      <el-button class="btn__item" type="danger" @click="handleGoBack"
+      <el-button class="item" type="danger" @click="handleGoBack"
         >返回</el-button
       >
     </div>
@@ -115,7 +117,7 @@ import { setCircle } from '@/utils/setCircle.js'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'static-balance-test-pdf',
+  name: 'test-static-balance-pdf',
 
   data() {
     return {
@@ -540,7 +542,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.static-balance-test-pdf {
+.test-static-balance-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -672,7 +674,7 @@ export default {
   .btn {
     @include flex(row, center, center);
     margin: 20px 0;
-    .btn__item {
+    .item {
       font-size: 28px;
       margin: 0 40px;
     }

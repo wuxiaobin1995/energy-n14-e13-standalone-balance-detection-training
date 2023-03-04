@@ -1,11 +1,14 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-25 11:19:13
- * @LastEditTime: 2023-03-03 17:57:36
+ * @LastEditTime: 2023-03-04 09:16:02
  * @Description : 静态平衡测试-参数设置
 -->
 <template>
   <div class="static-balance-set">
+    <!-- 语音播放 -->
+    <audio ref="audio" controls="controls" hidden :src="audioSrc" />
+
     <!-- 标题 -->
     <div class="title">静态平衡测试</div>
 
@@ -66,6 +69,9 @@
 </template>
 
 <script>
+/* 路径模块 */
+import path from 'path'
+
 export default {
   name: 'static-balance-set',
 
@@ -73,9 +79,22 @@ export default {
     return {
       sketchMapSrc: require('@/assets/img/Test/Static_Balance/1.png'), // 示意图
 
+      /* 语音相关 */
+      audioOpen: this.$store.state.voiceSwitch,
+      audioSrc: path.join(__static, `narrate/mandarin/静态平衡测试.mp3`),
+
       testTime: 30, // 测试时长
       isVisual: true, // 是否开启视觉反馈
       isBarycenter: true // 是否开启重心轨迹
+    }
+  },
+
+  mounted() {
+    if (this.audioOpen === true) {
+      setTimeout(() => {
+        this.$refs.audio.currentTime = 0
+        this.$refs.audio.play()
+      }, 500)
     }
   },
 

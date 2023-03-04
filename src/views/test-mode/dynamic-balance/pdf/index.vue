@@ -1,19 +1,21 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-01-05 21:42:14
- * @LastEditTime: 2022-09-12 19:57:14
+ * @LastEditTime: 2023-03-04 11:26:06
  * @Description : 动态平衡测试-PDF报告
 -->
 <template>
   <div
-    class="dynamic-balance-test-pdf"
+    class="test-dynamic-balance-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- 打印区域 -->
     <div id="pdf" class="pdf-wrapper">
       <!-- 大标题 -->
       <div class="top">
-        <div class="title">动态平衡测试报告</div>
+        <div class="title">
+          动态平衡测试报告({{ pdfData.hospital ? pdfData.hospital : '' }})
+        </div>
         <div class="logo">
           <el-image :src="logoSrc" fit="scale-down"></el-image>
         </div>
@@ -125,10 +127,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="primary" @click="handlePrint"
+      <el-button class="item" type="primary" @click="handlePrint"
         >保存PDF</el-button
       >
-      <el-button class="btn__item" type="danger" @click="handleGoBack"
+      <el-button class="item" type="danger" @click="handleGoBack"
         >返回</el-button
       >
     </div>
@@ -142,7 +144,7 @@ import { setCircle } from '@/utils/setCircle.js'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'dynamic-balance-test-pdf',
+  name: 'test-dynamic-balance-pdf',
 
   data() {
     return {
@@ -185,7 +187,6 @@ export default {
     }
   },
 
-  created() {},
   mounted() {
     this.getTestData()
   },
@@ -1023,7 +1024,7 @@ export default {
       this.$htmlToPdf(
         'pdf',
         `动态平衡测试报告 ${this.$moment().format('YYYY-MM-DD HH_mm_ss')}`,
-        470
+        420
       )
     },
 
@@ -1064,7 +1065,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test-pdf {
+.test-dynamic-balance-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -1198,7 +1199,7 @@ export default {
   .btn {
     margin: 20px 0;
     @include flex(row, center, center);
-    .btn__item {
+    .item {
       font-size: 28px;
       margin: 0 40px;
     }

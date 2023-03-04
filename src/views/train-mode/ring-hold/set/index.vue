@@ -1,11 +1,14 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-23 17:07:59
- * @LastEditTime: 2023-03-03 17:45:03
+ * @LastEditTime: 2023-03-04 11:56:06
  * @Description : 圆环保持训练-参数设置
 -->
 <template>
-  <div class="ring-hold-train-set">
+  <div class="ring-hold-set">
+    <!-- 语音播放 -->
+    <audio ref="audio" controls="controls" hidden :src="audioSrc" />
+
     <!-- 标题 -->
     <div class="title">圆环保持训练</div>
 
@@ -69,7 +72,7 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" round type="primary" @click="handleStart"
+      <el-button class="item" round type="primary" @click="handleStart"
         >开始训练</el-button
       >
     </div>
@@ -77,14 +80,21 @@
 </template>
 
 <script>
+/* 路径模块 */
+import path from 'path'
+
 /* 计算圆的相关参数 */
 import { setCircle } from '@/utils/setCircle.js'
 
 export default {
-  name: 'ring-hold-train-set',
+  name: 'ring-hold-set',
 
   data() {
     return {
+      /* 语音相关 */
+      audioOpen: this.$store.state.voiceSwitch,
+      audioSrc: path.join(__static, `narrate/mandarin/圆环保持训练.mp3`),
+
       /* 图形相关变量 */
       myChart: null,
       option: {},
@@ -102,6 +112,13 @@ export default {
     this.initChart() // 初始化echarts图形
     // 监听父容器的宽高变化，目的是实现echarts图形自适应父容器的宽高变化
     window.addEventListener('resize', this.resizeCharts)
+
+    if (this.audioOpen === true) {
+      setTimeout(() => {
+        this.$refs.audio.currentTime = 0
+        this.$refs.audio.play()
+      }, 500)
+    }
   },
   beforeDestroy() {
     // 注销echarts图形自适应监听事件
@@ -215,7 +232,7 @@ export default {
      */
     handleStart() {
       this.$router.push({
-        path: '/layout/ring-hold-train-measure',
+        path: '/train-ring-hold-measure',
         query: {
           trainTime: JSON.stringify(this.trainTime),
           smallCircle: JSON.stringify(this.smallCircle),
@@ -237,7 +254,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ring-hold-train-set {
+.ring-hold-set {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -287,7 +304,7 @@ export default {
   /* 按钮组 */
   .btn {
     @include flex(row, center, center);
-    .btn__item {
+    .item {
       font-size: 30px;
     }
   }

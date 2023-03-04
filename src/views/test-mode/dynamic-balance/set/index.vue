@@ -1,11 +1,14 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-25 11:20:04
- * @LastEditTime: 2023-03-03 17:54:54
+ * @LastEditTime: 2023-03-04 10:56:47
  * @Description : 动态平衡测试-参数设置
 -->
 <template>
-  <div class="dynamic-balance-test">
+  <div class="dynamic-balance-set">
+    <!-- 语音播放 -->
+    <audio ref="audio" controls="controls" hidden :src="audioSrc" />
+
     <!-- 标题 -->
     <div class="title">动态平衡测试</div>
 
@@ -75,6 +78,9 @@
 </template>
 
 <script>
+/* 路径模块 */
+import path from 'path'
+
 export default {
   name: 'dynamic-balance-set',
 
@@ -84,9 +90,27 @@ export default {
       twoSrc: require('@/assets/img/Test/Dynamic_Balance/2.png'),
       threeSrc: require('@/assets/img/Test/Dynamic_Balance/3.png'),
 
+      /* 语音相关 */
+      audioOpen: this.$store.state.voiceSwitch,
+      audioSrc: path.join(__static, `narrate/mandarin/动态平衡测试.mp3`),
+
       testTime: 30, // 测试时长
       isVisual: true, // 是否开启视觉反馈
       isBarycenter: true // 是否开启重心轨迹
+    }
+  },
+
+  created() {
+    /* 清空暂存的数据 */
+    window.sessionStorage.setItem('test-dynamic-balance-measure-one', '')
+    window.sessionStorage.setItem('test-dynamic-balance-measure-two', '')
+  },
+  mounted() {
+    if (this.audioOpen === true) {
+      setTimeout(() => {
+        this.$refs.audio.currentTime = 0
+        this.$refs.audio.play()
+      }, 500)
     }
   },
 
@@ -108,7 +132,7 @@ export default {
      */
     handleStart() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-experience-one',
+        path: '/test-dynamic-balance-experience-one',
         query: {
           testTime: JSON.stringify(this.testTime), // 测试时长
           isVisual: JSON.stringify(this.isVisual), // 是否开启视觉反馈
@@ -121,7 +145,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test {
+.dynamic-balance-set {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);

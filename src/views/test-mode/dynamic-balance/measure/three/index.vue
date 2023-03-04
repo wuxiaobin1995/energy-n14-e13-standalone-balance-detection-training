@@ -1,71 +1,73 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-01-05 14:10:36
- * @LastEditTime: 2022-07-26 15:02:30
+ * @LastEditTime: 2023-03-04 11:23:58
  * @Description : 动态平衡测试-测量3
 -->
 <template>
-  <div class="dynamic-balance-test-measure-three">
-    <!-- 标题 -->
-    <div class="title">动态平衡测试</div>
+  <div class="test-dynamic-balance-measure-three">
+    <div class="wrapper">
+      <!-- 标题 -->
+      <div class="title">动态平衡测试</div>
 
-    <!-- 测试类型 -->
-    <div class="type">测试内容：交叉对角线重心转移</div>
+      <!-- 测试类型 -->
+      <div class="type">测试内容：交叉对角线重心转移</div>
 
-    <!-- 主体 -->
-    <div class="main">
-      <!-- 参数 -->
-      <div class="parameter">
-        <div class="parameter__visual">
-          视觉反馈：{{ isVisual === true ? '有' : '无' }}
+      <!-- 主体 -->
+      <div class="main">
+        <!-- 参数 -->
+        <div class="parameter">
+          <div class="parameter__visual">
+            视觉反馈：{{ isVisual === true ? '有' : '无' }}
+          </div>
+          <div class="parameter__barycenter">
+            重心轨迹：{{ isBarycenter === true ? '有' : '无' }}
+          </div>
+          <div class="parameter__time">测试时长：{{ testTime }}秒</div>
         </div>
-        <div class="parameter__barycenter">
-          重心轨迹：{{ isBarycenter === true ? '有' : '无' }}
+
+        <!-- 图形区 -->
+        <div class="chart" v-show="isVisual">
+          <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
         </div>
-        <div class="parameter__time">测试时长：{{ testTime }}秒</div>
+
+        <!-- 倒计时 -->
+        <div class="count-down">
+          <div class="count-down__text">倒 计 时</div>
+          <div class="count-down__nowTime">{{ nowTime }} S</div>
+        </div>
       </div>
 
-      <!-- 图形区 -->
-      <div class="chart" v-show="isVisual">
-        <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
+      <!-- 按钮组 -->
+      <div class="btn">
+        <el-button
+          class="item"
+          :disabled="isStarting"
+          round
+          type="primary"
+          @click="handleStart"
+          >开始测试</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isStarting"
+          round
+          type="danger"
+          @click="handleFinish"
+          >结束测试</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isFinish"
+          round
+          type="success"
+          @click="handleCheckPdf"
+          >查看报告</el-button
+        >
+        <el-button class="item" round type="info" @click="handleGoBack"
+          >返回</el-button
+        >
       </div>
-
-      <!-- 倒计时 -->
-      <div class="count-down">
-        <div class="count-down__text">倒 计 时</div>
-        <div class="count-down__nowTime">{{ nowTime }} S</div>
-      </div>
-    </div>
-
-    <!-- 按钮组 -->
-    <div class="btn">
-      <el-button
-        class="btn__item"
-        :disabled="isStarting"
-        round
-        type="primary"
-        @click="handleStart"
-        >开始测试</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isStarting"
-        round
-        type="danger"
-        @click="handleFinish"
-        >结束测试</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isFinish"
-        round
-        type="success"
-        @click="handleCheckPdf"
-        >查看报告</el-button
-      >
-      <el-button class="btn__item" round type="info" @click="handleGoBack"
-        >返回</el-button
-      >
     </div>
   </div>
 </template>
@@ -82,7 +84,7 @@ import Readline from '@serialport/parser-readline'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'dynamic-balance-test-measure-three',
+  name: 'test-dynamic-balance-measure-three',
 
   data() {
     return {
@@ -477,7 +479,6 @@ export default {
      * @description: 保存数据逻辑函数
      */
     saveData() {
-      // 清除计时器
       if (this.timeClock) {
         clearInterval(this.timeClock)
       }
@@ -485,14 +486,13 @@ export default {
       this.usbPort.write('N')
 
       this.isStarting = false
-      this.nowTime = this.testTime
 
       // 把前两项数据从sessionStorage取出
       const oneSessionData = JSON.parse(
-        window.sessionStorage.getItem('dynamic-balance-test-measure-one')
+        window.sessionStorage.getItem('test-dynamic-balance-measure-one')
       )
       const twoSessionData = JSON.parse(
-        window.sessionStorage.getItem('dynamic-balance-test-measure-two')
+        window.sessionStorage.getItem('test-dynamic-balance-measure-two')
       )
       if (
         oneSessionData.length &&
@@ -501,13 +501,21 @@ export default {
       ) {
         // 保存到数据库
         this.pdfTime = this.$moment().format('YYYY-MM-DD HH:mm:ss')
+        const hospital = window.localStorage.getItem('hospital')
         const db = initDB()
         db.test_data
           .add({
+            hospital: hospital,
             userId: this.$store.state.currentUserInfo.userId,
             userName: this.$store.state.currentUserInfo.userName,
             sex: this.$store.state.currentUserInfo.sex,
+            affectedSide: this.$store.state.currentUserInfo.affectedSide,
+            height: this.$store.state.currentUserInfo.height,
+            weight: this.$store.state.currentUserInfo.weight,
+            birthday: this.$store.state.currentUserInfo.birthday,
+
             pdfTime: this.pdfTime,
+
             testTime: this.testTime,
             isVisual: this.isVisual,
             isBarycenter: this.isBarycenter,
@@ -517,16 +525,18 @@ export default {
             type: '动态平衡测试'
           })
           .then(() => {
-            this.isFinish = true
             this.$message({
               message: '数据保存成功',
               type: 'success',
-              duration: 2500
+              duration: 1500
             })
           })
+          .then(() => {
+            this.isFinish = true
+            this.nowTime = this.testTime
+          })
           .catch(() => {
-            this.isFinish = false
-            this.$alert(`点击返回按钮，重新测试！`, `数据保存失败`, {
+            this.$alert(`请点击"返回"按钮，然后重新测试！`, '数据保存失败', {
               type: 'error',
               showClose: false,
               center: true,
@@ -538,15 +548,19 @@ export default {
           })
       } else {
         this.isFinish = false
-        this.$alert(`点击返回按钮，重新测试！`, `3组数据中，存在数据项为空`, {
-          type: 'error',
-          showClose: false,
-          center: true,
-          confirmButtonText: '返回',
-          callback: () => {
-            this.handleGoBack()
+        this.$alert(
+          `点击"返回"按钮，然后重新测试！`,
+          `3组数据中，存在数据项为空`,
+          {
+            type: 'error',
+            showClose: false,
+            center: true,
+            confirmButtonText: '返回',
+            callback: () => {
+              this.handleGoBack()
+            }
           }
-        })
+        )
       }
     },
 
@@ -554,11 +568,11 @@ export default {
      * @description: 开始测试
      */
     handleStart() {
-      this.isFinish = false
       this.isStarting = true
+      this.isFinish = false
+      this.timeClock = null
       this.nowTime = this.testTime
       this.trackArray = []
-      this.pdfTime = ''
 
       if (this.usbPort) {
         if (!this.usbPort.isOpen) {
@@ -589,11 +603,11 @@ export default {
      */
     handleCheckPdf() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-pdf',
+        path: '/test-dynamic-balance-pdf',
         query: {
           userId: JSON.stringify(this.$store.state.currentUserInfo.userId),
           pdfTime: JSON.stringify(this.pdfTime),
-          routerName: JSON.stringify('/layout/dynamic-balance-test-set')
+          routerName: JSON.stringify('/test-select/dynamic-balance-set')
         }
       })
     },
@@ -603,7 +617,7 @@ export default {
      */
     handleGoBack() {
       this.$router.push({
-        path: '/layout/dynamic-balance-test-set'
+        path: '/test-select/dynamic-balance-set'
       })
     },
 
@@ -620,75 +634,84 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dynamic-balance-test-measure-three {
+.test-dynamic-balance-measure-three {
   width: 100%;
   height: 100%;
-  padding: 20px 100px;
-  @include flex(column, stretch, stretch);
+  @include flex(row, center, center);
 
-  /* 标题 */
-  .title {
-    font-size: 36px;
-    color: green;
-  }
+  .wrapper {
+    width: 96%;
+    height: 96%;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
+    @include flex(column, stretch, stretch);
+    padding: 20px 100px;
 
-  /* 测试类型 */
-  .type {
-    margin-top: 20px;
-    font-size: 22px;
-  }
+    /* 标题 */
+    .title {
+      font-size: 36px;
+      color: green;
+    }
 
-  /* 主体 */
-  .main {
-    flex: 1;
-    @include flex(row, space-between, center);
-    // 参数
-    .parameter {
-      width: 20%;
-      .parameter__visual {
-        font-size: 22px;
+    /* 测试类型 */
+    .type {
+      margin-top: 20px;
+      font-size: 22px;
+    }
+
+    /* 主体 */
+    .main {
+      flex: 1;
+      @include flex(row, space-between, center);
+      // 参数
+      .parameter {
+        width: 20%;
+        .parameter__visual {
+          font-size: 22px;
+        }
+        .parameter__barycenter {
+          margin-top: 100px;
+          font-size: 22px;
+        }
+        .parameter__time {
+          margin-top: 100px;
+          font-size: 22px;
+        }
       }
-      .parameter__barycenter {
-        margin-top: 100px;
-        font-size: 22px;
+
+      // 图形区
+      .chart {
+        width: 30vw;
+        height: 63vh;
       }
-      .parameter__time {
-        margin-top: 100px;
-        font-size: 22px;
+
+      // 倒计时
+      .count-down {
+        width: 20%;
+        @include flex(column, center, center);
+        .count-down__text {
+          font-size: 28px;
+        }
+        .count-down__nowTime {
+          margin-top: 10px;
+          padding: 4px 0;
+          width: 100px;
+          background-color: rgb(112, 173, 71);
+          @include flex(row, center, center);
+          font-size: 28px;
+          color: #ffffff;
+        }
       }
     }
 
-    // 图形区
-    .chart {
-      width: 30vw;
-      height: 63vh;
-    }
-
-    // 倒计时
-    .count-down {
-      width: 20%;
-      @include flex(column, center, center);
-      .count-down__text {
-        font-size: 28px;
+    /* 按钮组 */
+    .btn {
+      @include flex(row, center, center);
+      .item {
+        font-size: 30px;
+        margin: 0 40px;
       }
-      .count-down__nowTime {
-        margin-top: 10px;
-        padding: 4px 0;
-        width: 100px;
-        background-color: rgb(112, 173, 71);
-        @include flex(row, center, center);
-        font-size: 28px;
-        color: #ffffff;
-      }
-    }
-  }
-
-  /* 按钮组 */
-  .btn {
-    @include flex(row, center, center);
-    .btn__item {
-      font-size: 30px;
-      margin: 0 40px;
     }
   }
 }
