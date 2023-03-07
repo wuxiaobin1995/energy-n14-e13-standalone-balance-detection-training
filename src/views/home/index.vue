@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-02 11:20:41
- * @LastEditTime: 2023-03-03 17:47:50
+ * @LastEditTime: 2023-03-06 11:37:45
  * @Description : home
 -->
 <template>
@@ -264,6 +264,29 @@ export default {
           message: '提示，该功能仍在开发阶段......',
           type: 'warning'
         })
+
+        // if (this.$store.state.currentUserInfo.userId) {
+        //   this.$router.push({
+        //     path: '/game'
+        //   })
+        // } else {
+        //   this.$confirm(
+        //     `检测到您还没有选择用户，请先到用户页面进行选择！`,
+        //     '提示',
+        //     {
+        //       type: 'warning',
+        //       center: true,
+        //       showCancelButton: false,
+        //       confirmButtonText: '确 定'
+        //     }
+        //   )
+        //     .then(() => {
+        //       this.$router.push({
+        //         path: '/user'
+        //       })
+        //     })
+        //     .catch(() => {})
+        // }
       }
     },
 

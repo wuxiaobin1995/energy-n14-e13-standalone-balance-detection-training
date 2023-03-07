@@ -1,12 +1,12 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 21:33:10
- * @LastEditTime: 2022-03-05 19:15:29
+ * @LastEditTime: 2023-03-06 11:33:42
  * @Description : 圆圈保持训练-长期趋势报告
 -->
 <template>
   <div
-    class="circle-hold-train-secular-trend-pdf"
+    class="train-circle-hold-secular-trend-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- PDF区域 -->
@@ -25,10 +25,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="primary" @click="handlePrint"
+      <el-button class="item" type="primary" @click="handlePrint"
         >保存PDF</el-button
       >
-      <el-button class="btn__item" type="success" plain @click="handleGoBack"
+      <el-button class="item" type="success" plain @click="handleGoBack"
         >返回</el-button
       >
     </div>
@@ -39,12 +39,14 @@
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'circle-hold-train-secular-trend-pdf',
+  name: 'train-circle-hold-secular-trend-pdf',
 
   data() {
     return {
       /* 路由传参 */
+      userId: JSON.parse(this.$route.query.userId),
       routerName: JSON.parse(this.$route.query.routerName),
+      type: JSON.parse(this.$route.query.type),
 
       /* 图形相关变量 */
       myChart: null,
@@ -86,8 +88,8 @@ export default {
       this.fullscreenLoading = true
       db.train_data
         .where({
-          userId: this.$store.state.currentUserInfo.userId,
-          type: '圆圈保持训练'
+          userId: this.userId,
+          type: this.type
         })
         .toArray()
         .then(res => {
@@ -206,7 +208,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.circle-hold-train-secular-trend-pdf {
+.train-circle-hold-secular-trend-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -236,7 +238,7 @@ export default {
   .btn {
     @include flex(row, center, center);
     margin: 20px 0;
-    .btn__item {
+    .item {
       font-size: 28px;
       margin: 0 40px;
     }

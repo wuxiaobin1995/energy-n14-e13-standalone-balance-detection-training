@@ -1,65 +1,67 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 10:13:36
- * @LastEditTime: 2022-07-26 15:05:11
- * @Description : 圆环保持训练-测量
+ * @LastEditTime: 2023-03-06 10:55:36
+ * @Description : 圆环保持训练-具体测量
 -->
 <template>
-  <div class="ring-hold-train-measure">
-    <!-- 标题 -->
-    <div class="title">圆环保持训练</div>
+  <div class="train-ring-hold-measure">
+    <div class="wrapper">
+      <!-- 标题 -->
+      <div class="title">圆环保持训练</div>
 
-    <!-- 提示 -->
-    <div class="tip">
-      请双腿平稳站立在平台上，在规定的范围内，控制重心做环绕训练。
-    </div>
-
-    <!-- 主体 -->
-    <div class="main">
-      <!-- 占位 -->
-      <div class="perch"></div>
-
-      <!-- 图形区 -->
-      <div class="chart">
-        <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
+      <!-- 提示 -->
+      <div class="tip">
+        请双腿平稳站立在平台上，在规定的范围内，控制重心做环绕训练。
       </div>
 
-      <!-- 倒计时 -->
-      <div class="count-down">
-        <div class="count-down__text">倒 计 时</div>
-        <div class="count-down__nowTime">{{ nowTime }} S</div>
-      </div>
-    </div>
+      <!-- 主体 -->
+      <div class="main">
+        <!-- 占位 -->
+        <div class="perch"></div>
 
-    <!-- 按钮组 -->
-    <div class="btn">
-      <el-button
-        class="btn__item"
-        :disabled="isStarting"
-        round
-        type="primary"
-        @click="handleStart"
-        >开始训练</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isStarting"
-        round
-        type="danger"
-        @click="handleFinish"
-        >结束训练</el-button
-      >
-      <el-button
-        class="btn__item"
-        :disabled="!isFinish"
-        round
-        type="success"
-        @click="handleCheckPdf"
-        >查看报告</el-button
-      >
-      <el-button class="btn__item" round type="info" @click="handleGoBack"
-        >返回</el-button
-      >
+        <!-- 图形区 -->
+        <div class="chart">
+          <div id="chart" :style="{ width: '100%', height: '100%' }"></div>
+        </div>
+
+        <!-- 倒计时 -->
+        <div class="count-down">
+          <div class="count-down__text">倒 计 时</div>
+          <div class="count-down__nowTime">{{ nowTime }} S</div>
+        </div>
+      </div>
+
+      <!-- 按钮组 -->
+      <div class="btn">
+        <el-button
+          class="item"
+          :disabled="isStarting"
+          round
+          type="primary"
+          @click="handleStart"
+          >开始训练</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isStarting"
+          round
+          type="danger"
+          @click="handleFinish"
+          >结束训练</el-button
+        >
+        <el-button
+          class="item"
+          :disabled="!isFinish"
+          round
+          type="success"
+          @click="handleCheckPdf"
+          >查看报告</el-button
+        >
+        <el-button class="item" round type="info" @click="handleGoBack"
+          >返回</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -76,7 +78,7 @@ import Readline from '@serialport/parser-readline'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'ring-hold-train-measure',
+  name: 'train-ring-hold-measure',
 
   data() {
     return {
@@ -337,17 +339,24 @@ export default {
       this.usbPort.write('N')
 
       this.isStarting = false
-      this.nowTime = this.trainTime
 
-      // 保存到数据库
+      /* 保存到数据库 */
       this.pdfTime = this.$moment().format('YYYY-MM-DD HH:mm:ss')
+      const hospital = window.localStorage.getItem('hospital')
       const db = initDB()
       db.train_data
         .add({
+          hospital: hospital,
           userId: this.$store.state.currentUserInfo.userId,
           userName: this.$store.state.currentUserInfo.userName,
           sex: this.$store.state.currentUserInfo.sex,
+          affectedSide: this.$store.state.currentUserInfo.affectedSide,
+          height: this.$store.state.currentUserInfo.height,
+          weight: this.$store.state.currentUserInfo.weight,
+          birthday: this.$store.state.currentUserInfo.birthday,
+
           pdfTime: this.pdfTime,
+
           trainTime: this.trainTime,
           smallCircle: this.smallCircle,
           bigCircle: this.bigCircle,
@@ -355,18 +364,25 @@ export default {
           type: '圆环保持训练'
         })
         .then(() => {
-          this.isFinish = true
           this.$message({
             message: '数据保存成功',
             type: 'success',
-            duration: 2500
+            duration: 1500
           })
         })
+        .then(() => {
+          this.isFinish = true
+          this.nowTime = this.trainTime
+        })
         .catch(() => {
-          this.isFinish = false
-          this.$message({
-            message: '数据保存失败，请重启软件！',
-            type: 'error'
+          this.$alert(`请点击"返回"按钮，然后重新训练！`, '数据保存失败', {
+            type: 'error',
+            showClose: false,
+            center: true,
+            confirmButtonText: '返回',
+            callback: () => {
+              this.handleGoBack()
+            }
           })
         })
     },
@@ -375,11 +391,11 @@ export default {
      * @description: 开始训练
      */
     handleStart() {
-      this.isFinish = false
       this.isStarting = true
+      this.isFinish = false
+      this.timeClock = null
       this.nowTime = this.trainTime
       this.trackArray = []
-      this.pdfTime = ''
 
       if (this.usbPort) {
         if (!this.usbPort.isOpen) {
@@ -410,11 +426,11 @@ export default {
      */
     handleCheckPdf() {
       this.$router.push({
-        path: '/layout/ring-hold-train-pdf',
+        path: '/train-ring-hold-pdf',
         query: {
           userId: JSON.stringify(this.$store.state.currentUserInfo.userId),
           pdfTime: JSON.stringify(this.pdfTime),
-          routerName: JSON.stringify('/layout/ring-hold-train-set')
+          routerName: JSON.stringify('/train-select/ring-hold-set')
         }
       })
     },
@@ -424,7 +440,7 @@ export default {
      */
     handleGoBack() {
       this.$router.push({
-        path: '/layout/ring-hold-train-set'
+        path: '/train-select/ring-hold-set'
       })
     },
 
@@ -441,65 +457,74 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ring-hold-train-measure {
+.train-ring-hold-measure {
   width: 100%;
   height: 100%;
-  padding: 20px 100px;
-  @include flex(column, stretch, stretch);
+  @include flex(row, center, center);
 
-  /* 标题 */
-  .title {
-    font-size: 36px;
-    color: green;
-  }
+  .wrapper {
+    width: 96%;
+    height: 96%;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px #929292;
+    @include flex(column, stretch, stretch);
+    padding: 20px 100px;
 
-  /* 提示 */
-  .tip {
-    margin-top: 20px;
-    font-size: 22px;
-  }
-
-  /* 主体 */
-  .main {
-    flex: 1;
-    @include flex(row, space-between, center);
-
-    // 占位
-    .perch {
-      width: 20%;
+    /* 标题 */
+    .title {
+      font-size: 36px;
+      color: green;
     }
 
-    // 图形区
-    .chart {
-      width: 30vw;
-      height: 63vh;
+    /* 提示 */
+    .tip {
+      margin-top: 20px;
+      font-size: 22px;
     }
 
-    // 倒计时
-    .count-down {
-      width: 20%;
-      @include flex(column, center, center);
-      .count-down__text {
-        font-size: 28px;
+    /* 主体 */
+    .main {
+      flex: 1;
+      @include flex(row, space-between, center);
+
+      // 占位
+      .perch {
+        width: 20%;
       }
-      .count-down__nowTime {
-        margin-top: 10px;
-        padding: 4px 0;
-        width: 100px;
-        background-color: rgb(112, 173, 71);
-        @include flex(row, center, center);
-        font-size: 28px;
-        color: #ffffff;
+
+      // 图形区
+      .chart {
+        width: 30vw;
+        height: 63vh;
+      }
+
+      // 倒计时
+      .count-down {
+        width: 20%;
+        @include flex(column, center, center);
+        .count-down__text {
+          font-size: 28px;
+        }
+        .count-down__nowTime {
+          margin-top: 10px;
+          padding: 4px 0;
+          width: 100px;
+          background-color: rgb(112, 173, 71);
+          @include flex(row, center, center);
+          font-size: 28px;
+          color: #ffffff;
+        }
       }
     }
-  }
 
-  /* 按钮组 */
-  .btn {
-    @include flex(row, center, center);
-    .btn__item {
-      font-size: 30px;
-      margin: 0 40px;
+    /* 按钮组 */
+    .btn {
+      @include flex(row, center, center);
+      .item {
+        font-size: 30px;
+        margin: 0 40px;
+      }
     }
   }
 }

@@ -1,28 +1,54 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 21:14:59
- * @LastEditTime: 2022-04-21 17:37:24
+ * @LastEditTime: 2023-03-06 11:31:21
  * @Description : 圆环保持训练-数据记录
 -->
 <template>
   <div class="ring-hold">
+    <!-- 顶部 -->
+    <div class="top-wrapper">
+      <!-- 标题 -->
+      <el-page-header
+        title="返回首页"
+        content="圆环保持训练"
+        @back="handleToHome"
+      ></el-page-header>
+      <!-- 日期筛选 -->
+      <el-date-picker
+        class="data-select"
+        v-model="selectDateValue"
+        type="daterange"
+        :picker-options="pickerOptions"
+        range-separator="——"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        value-format="yyyy-MM-dd HH:mm:ss"
+        :editable="false"
+        :clearable="false"
+        :unlink-panels="true"
+        align="right"
+        @change="changeData"
+      >
+      </el-date-picker>
+    </div>
+
     <!-- 表格 -->
     <el-table
-      class="table"
-      :data="showData"
-      style="width: 100%"
+      :data="tableData"
+      class="table-wrapper"
+      style="width: 80%"
       height="100%"
       :default-sort="{ prop: 'pdfTime', order: 'descending' }"
-      :stripe="false"
+      :stripe="true"
       :border="true"
-      :highlight-current-row="true"
-      v-loading="tableLoading"
+      v-loading="loading"
       element-loading-text="拼命加载中"
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.8)"
     >
       <!-- No -->
-      <el-table-column align="center" type="index" width="50"></el-table-column>
+      <el-table-column type="index" width="50" align="center" />
       <!-- 训练时间 -->
       <el-table-column
         align="center"
@@ -57,10 +83,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="success" @click="handleSecularTrend"
+      <el-button class="item" type="success" @click="handleSecularTrend"
         >长期趋势报告</el-button
       >
-      <el-button class="btn__item" type="primary" @click="handleRefreshTable"
+      <el-button class="item" type="primary" @click="handleRefreshTable"
         >刷 新 表 格</el-button
       >
     </div>
@@ -75,22 +101,104 @@ export default {
 
   data() {
     return {
-      tableLoading: true, // 表格加载动画
-      showData: [] // 表格显示的数据
+      tableData: [],
+      loading: false, // 表格加载动画
+      // 日期选择器的筛选值
+      selectDateValue: [
+        this.$moment().format('YYYY-MM-DD 00:00:00'),
+        this.$moment().format('YYYY-MM-DD 23:59:59')
+      ],
+      /* 日期选择器快捷选项 */
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: '今天',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '昨天',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 1)
+              end.setTime(end.getTime() - 3600 * 1000 * 24 * 1)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近一周',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近一个月',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近三个月',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近一年',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 360)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '该用户所有数据',
+            onClick(picker) {
+              const start = new Date(new Date().setHours(0, 0, 0))
+              const end = new Date(new Date().setHours(23, 59, 59))
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 36000)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      }
     }
   },
 
   created() {
-    this.getData()
+    this.initData()
   },
 
   methods: {
     /**
-     * @description: 获取数据
+     * @description: 返回首页
      */
-    getData() {
+    handleToHome() {
+      this.$router.push({
+        path: '/home'
+      })
+    },
+
+    /**
+     * @description: 表格数据初始化
+     */
+    initData() {
       const db = initDB()
-      this.tableLoading = true
+      this.loading = true
       db.train_data
         .where({
           userId: this.$store.state.currentUserInfo.userId,
@@ -98,17 +206,89 @@ export default {
         })
         .toArray()
         .then(res => {
-          this.showData = res
+          this.tableData = res
         })
         .catch(err => {
-          this.$message({
-            message: `数据获取失败：${err}`,
-            type: 'error'
+          this.$confirm(`${err}。获取数据失败，请点击刷新按钮重试！`, '提示', {
+            type: 'warning',
+            center: true,
+            showClose: false,
+            closeOnClickModal: false,
+            closeOnPressEscape: false,
+            confirmButtonText: '刷 新',
+            cancelButtonText: '返回首页'
           })
+            .then(() => {
+              this.handleRefresh()
+            })
+            .catch(() => {
+              this.handleToHome()
+            })
         })
         .finally(() => {
-          this.tableLoading = false
+          this.loading = false
         })
+    },
+
+    /**
+     * @description: 根据日期选择获取表格数据
+     */
+    getData() {
+      const db = initDB()
+      this.loading = true
+      db.train_data
+        .where(['userId', 'type', 'pdfTime'])
+        .between(
+          [
+            this.$store.state.currentUserInfo.userId,
+            '圆环保持训练',
+            this.selectDateValue[0]
+          ],
+          [
+            this.$store.state.currentUserInfo.userId,
+            '圆环保持训练',
+            this.selectDateValue[1]
+          ],
+          true,
+          true
+        )
+        .toArray()
+        .then(res => {
+          this.tableData = res
+        })
+        .catch(err => {
+          this.$confirm(
+            `${err}。根据日期获取数据失败，请点击刷新按钮重试！`,
+            '提示',
+            {
+              type: 'warning',
+              center: true,
+              showClose: false,
+              closeOnClickModal: false,
+              closeOnPressEscape: false,
+              confirmButtonText: '刷 新',
+              cancelButtonText: '返回首页'
+            }
+          )
+            .then(() => {
+              this.handleRefresh()
+            })
+            .catch(() => {
+              this.handleToHome()
+            })
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+
+    /**
+     * @description: 用户确认选定的值时触发
+     * @param {*} value 选择的日期数组
+     */
+    changeData(value) {
+      this.selectDateValue = value
+      this.getData()
     },
 
     /**
@@ -118,11 +298,11 @@ export default {
      */
     handleToPdf(index, row) {
       this.$router.push({
-        path: '/layout/ring-hold-train-pdf',
+        path: '/train-ring-hold-pdf',
         query: {
           userId: JSON.stringify(row.userId),
           pdfTime: JSON.stringify(row.pdfTime),
-          routerName: JSON.stringify('/layout/ring-hold')
+          routerName: JSON.stringify('/train-record/ring-hold')
         }
       })
     },
@@ -141,7 +321,7 @@ export default {
       })
         .then(() => {
           const db = initDB()
-          this.tableLoading = true
+          this.loading = true
           db.train_data
             .where({
               userId: row.userId,
@@ -152,7 +332,8 @@ export default {
             .then(() => {
               this.$message({
                 message: '删除成功',
-                type: 'success'
+                type: 'success',
+                duration: 2000
               })
             })
             .then(() => {
@@ -165,7 +346,7 @@ export default {
               })
             })
             .finally(() => {
-              this.tableLoading = false
+              this.loading = false
             })
         })
         .catch(() => {})
@@ -176,22 +357,24 @@ export default {
      */
     handleSecularTrend() {
       this.$router.push({
-        path: '/layout/ring-hold-train-secular-trend-pdf',
+        path: '/train-ring-hold-secular-trend-pdf',
         query: {
-          routerName: JSON.stringify('/layout/ring-hold')
+          userId: JSON.stringify(this.$store.state.currentUserInfo.userId),
+          routerName: JSON.stringify('/train-record/ring-hold'),
+          type: JSON.stringify('圆环保持训练')
         }
       })
     },
 
     /**
-     * @description: 刷新表格数据，通过路由跳转的方式实现
+     * @description: 刷新页面
      */
     handleRefreshTable() {
       this.$router.push({
         path: '/refresh',
         query: {
-          routerName: JSON.stringify('/layout/ring-hold'),
-          duration: JSON.stringify(100)
+          routerName: JSON.stringify('/train-record/ring-hold'),
+          duration: JSON.stringify(300)
         }
       })
     }
@@ -202,12 +385,23 @@ export default {
 <style lang="scss" scoped>
 .ring-hold {
   width: 100%;
-  height: 100%;
-  padding: 20px 40px;
-  @include flex(column, stretch, stretch);
+  height: 90%;
+  @include flex(column, stretch, center);
+
+  /* 顶部 */
+  .top-wrapper {
+    width: 80%;
+    margin: 10px 0;
+    @include flex(row, space-between, center);
+    // 标题
+    .text {
+      font-size: 32px;
+      color: green;
+    }
+  }
 
   /* 表格 */
-  .table {
+  .table-wrapper {
     flex: 1;
   }
 
@@ -215,7 +409,7 @@ export default {
   .btn {
     margin-top: 20px;
     @include flex(row, center, center);
-    .btn__item {
+    .item {
       margin: 0 40px;
     }
   }

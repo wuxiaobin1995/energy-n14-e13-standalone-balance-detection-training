@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2023-03-04 11:20:20
+ * @LastEditTime: 2023-03-06 11:50:22
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -91,6 +91,13 @@ const routes = [
         component: () => import('@/views/set/set-developer'),
         meta: ['开发者']
       },
+      // 游戏
+      {
+        path: 'game',
+        name: 'game',
+        component: () => import('@/views/game'),
+        meta: ['游戏']
+      },
 
       /* 测试模块 */
       // 测试项目选择
@@ -124,12 +131,12 @@ const routes = [
         component: () => import('@/views/test-mode/static-balance/experience'),
         meta: ['静态平衡测试-测前体验']
       },
-      // 静态平衡测试-测量
+      // 静态平衡测试-具体测量
       {
         path: 'test-static-balance-measure',
         name: 'test-static-balance-measure',
         component: () => import('@/views/test-mode/static-balance/measure'),
-        meta: ['静态平衡测试-测量']
+        meta: ['静态平衡测试-具体测量']
       },
       // 动态平衡测试-测前体验1
       {
@@ -205,19 +212,19 @@ const routes = [
           }
         ]
       },
-      // 圆环保持训练-测量
+      // 圆环保持训练-具体测量
       {
         path: 'train-ring-hold-measure',
         name: 'train-ring-hold-measure',
         component: () => import('@/views/train-mode/ring-hold/measure'),
-        meta: ['圆环保持训练-测量']
+        meta: ['圆环保持训练-具体测量']
       },
-      // 圆圈保持训练-测量
+      // 圆圈保持训练-具体测量
       {
         path: 'train-circle-hold-measure',
         name: 'train-circle-hold-measure',
         component: () => import('@/views/train-mode/circle-hold/measure'),
-        meta: ['圆圈保持训练-测量']
+        meta: ['圆圈保持训练-具体测量']
       },
 
       /* 数据记录 */

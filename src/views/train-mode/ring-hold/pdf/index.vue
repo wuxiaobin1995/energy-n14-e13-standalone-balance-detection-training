@@ -6,14 +6,16 @@
 -->
 <template>
   <div
-    class="ring-hold-train-pdf"
+    class="train-ring-hold-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- 打印区域 -->
     <div id="pdf" class="pdf-wrapper">
       <!-- 大标题 -->
       <div class="top">
-        <div class="title">圆环保持训练报告</div>
+        <div class="title">
+          圆环保持训练报告({{ pdfData.hospital ? pdfData.hospital : '' }})
+        </div>
         <div class="logo">
           <el-image :src="logoSrc" fit="scale-down"></el-image>
         </div>
@@ -45,10 +47,10 @@
 
     <!-- 按钮组 -->
     <div class="btn">
-      <el-button class="btn__item" type="primary" @click="handlePrint"
+      <el-button class="item" type="primary" @click="handlePrint"
         >保存PDF</el-button
       >
-      <el-button class="btn__item" type="danger" @click="handleGoBack"
+      <el-button class="item" type="danger" @click="handleGoBack"
         >返回</el-button
       >
     </div>
@@ -62,7 +64,7 @@ import { setCircle } from '@/utils/setCircle.js'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'ring-hold-train-pdf',
+  name: 'train-ring-hold-pdf',
 
   data() {
     return {
@@ -277,7 +279,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ring-hold-train-pdf {
+.train-ring-hold-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
@@ -358,7 +360,7 @@ export default {
   .btn {
     @include flex(row, center, center);
     margin: 0 0 20px 0;
-    .btn__item {
+    .item {
       font-size: 28px;
       margin: 0 40px;
     }

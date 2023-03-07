@@ -1,8 +1,8 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-26 16:56:17
- * @LastEditTime: 2023-03-04 10:03:15
- * @Description : 静态平衡测试-测量
+ * @LastEditTime: 2023-03-06 11:03:35
+ * @Description : 静态平衡测试-具体测量
 -->
 <template>
   <div class="test-static-balance-measure">
