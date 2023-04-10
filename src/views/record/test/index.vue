@@ -1,20 +1,24 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-03 15:50:23
- * @LastEditTime: 2023-03-03 15:50:28
+ * @LastEditTime: 2023-04-10 16:36:36
  * @Description : 测试-数据记录
 -->
 <template>
   <div class="test-record">
     <div class="wrapper">
       <div class="btn">
+        <el-button class="item" type="danger" round plain @click="handleBalance"
+          >平衡测试</el-button
+        >
+
         <el-button
           class="item"
-          type="danger"
+          type="primary"
           round
           plain
-          @click="handleStaticBalance"
-          >静态平衡测试</el-button
+          @click="handleProprioceptionBalance"
+          >本体感觉测试</el-button
         >
 
         <el-button
@@ -42,10 +46,17 @@ export default {
 
   methods: {
     /**
-     * @description: 静态平衡测试
+     * @description: 平衡测试
      */
-    handleStaticBalance() {
-      this.$router.push({ path: '/test-record/static-balance' })
+    handleBalance() {
+      this.$router.push({ path: '/test-record/balance' })
+    },
+
+    /**
+     * @description: 本体感觉平衡测试
+     */
+    handleProprioceptionBalance() {
+      this.$router.push({ path: '/test-record/proprioception-balance' })
     },
 
     /**

@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2023-03-06 11:50:22
+ * @LastEditTime: 2023-04-10 17:04:25
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -106,14 +106,22 @@ const routes = [
         name: 'test-select',
         component: () => import('@/views/test-mode'),
         meta: ['测试项目选择'],
-        redirect: '/test-select/static-balance-set',
+        redirect: '/test-select/balance-set',
         children: [
-          // 静态平衡测试
+          // 平衡测试
           {
-            path: 'static-balance-set',
-            name: 'static-balance-set',
-            component: () => import('@/views/test-mode/static-balance/set'),
-            meta: ['静态平衡测试']
+            path: 'balance-set',
+            name: 'balance-set',
+            component: () => import('@/views/test-mode/balance/set'),
+            meta: ['平衡测试']
+          },
+          // 本体感觉平衡测试
+          {
+            path: 'proprioception-balance-set',
+            name: 'proprioception-balance-set',
+            component: () =>
+              import('@/views/test-mode/proprioception-balance/set'),
+            meta: ['本体感觉平衡测试']
           },
           // 动态平衡测试
           {
@@ -124,19 +132,35 @@ const routes = [
           }
         ]
       },
-      // 静态平衡测试-测前体验
+      // 平衡测试-测前体验
       {
-        path: 'test-static-balance-experience',
-        name: 'test-static-balance-experience',
-        component: () => import('@/views/test-mode/static-balance/experience'),
-        meta: ['静态平衡测试-测前体验']
+        path: 'test-balance-experience',
+        name: 'test-balance-experience',
+        component: () => import('@/views/test-mode/balance/experience'),
+        meta: ['平衡测试-测前体验']
       },
-      // 静态平衡测试-具体测量
+      // 平衡测试-具体测量
       {
-        path: 'test-static-balance-measure',
-        name: 'test-static-balance-measure',
-        component: () => import('@/views/test-mode/static-balance/measure'),
-        meta: ['静态平衡测试-具体测量']
+        path: 'test-balance-measure',
+        name: 'test-balance-measure',
+        component: () => import('@/views/test-mode/balance/measure'),
+        meta: ['平衡测试-具体测量']
+      },
+      // 本体感觉平衡测试-测前体验
+      {
+        path: 'test-proprioception-balance-experience',
+        name: 'test-proprioception-balance-experience',
+        component: () =>
+          import('@/views/test-mode/proprioception-balance/experience'),
+        meta: ['本体感觉平衡测试-测前体验']
+      },
+      // 本体感觉平衡测试-具体测量
+      {
+        path: 'test-proprioception-balance-measure',
+        name: 'test-proprioception-balance-measure',
+        component: () =>
+          import('@/views/test-mode/proprioception-balance/measure'),
+        meta: ['本体感觉平衡测试-具体测量']
       },
       // 动态平衡测试-测前体验1
       {
@@ -234,14 +258,22 @@ const routes = [
         name: 'test-record',
         component: () => import('@/views/record/test'),
         meta: ['测试-数据记录'],
-        redirect: '/test-record/static-balance',
+        redirect: '/test-record/balance',
         children: [
-          // 静态平衡测试
+          // 平衡测试
           {
-            path: 'static-balance',
-            name: 'static-balance',
-            component: () => import('@/views/record/test/static-balance'),
-            meta: ['静态平衡测试']
+            path: 'balance',
+            name: 'balance',
+            component: () => import('@/views/record/test/balance'),
+            meta: ['平衡测试']
+          },
+          // 本体感觉平衡测试
+          {
+            path: 'proprioception-balance',
+            name: 'proprioception-balance',
+            component: () =>
+              import('@/views/record/test/proprioception-balance'),
+            meta: ['本体感觉平衡测试']
           },
           // 动态平衡测试
           {
@@ -280,20 +312,34 @@ const routes = [
   },
 
   /* 测试报告 */
-  // 静态平衡测试-PDF报告
+  // 平衡测试-PDF报告
   {
-    path: '/test-static-balance-pdf',
-    name: 'test-static-balance-pdf',
-    component: () => import('@/views/test-mode/static-balance/pdf'),
-    meta: ['静态平衡测试-PDF报告']
+    path: '/test-balance-pdf',
+    name: 'test-balance-pdf',
+    component: () => import('@/views/test-mode/balance/pdf'),
+    meta: ['平衡测试-PDF报告']
   },
-  // 静态平衡测试-长期趋势报告
+  // 平衡测试-长期趋势报告
   {
-    path: '/test-static-balance-secular-trend-pdf',
-    name: 'test-static-balance-secular-trend-pdf',
+    path: '/test-balance-secular-trend-pdf',
+    name: 'test-balance-secular-trend-pdf',
+    component: () => import('@/views/record/test/balance/secular-trend-pdf'),
+    meta: ['平衡测试-长期趋势报告']
+  },
+  // 本体感觉平衡测试-PDF报告
+  {
+    path: '/test-proprioception-balance-pdf',
+    name: 'test-proprioception-balance-pdf',
+    component: () => import('@/views/test-mode/proprioception-balance/pdf'),
+    meta: ['本体感觉平衡测试-PDF报告']
+  },
+  // 本体感觉平衡测试-长期趋势报告
+  {
+    path: '/test-proprioception-balance-secular-trend-pdf',
+    name: 'test-proprioception-balance-secular-trend-pdf',
     component: () =>
-      import('@/views/record/test/static-balance/secular-trend-pdf'),
-    meta: ['静态平衡测试-长期趋势报告']
+      import('@/views/record/test/proprioception-balance/secular-trend-pdf'),
+    meta: ['本体感觉平衡测试-长期趋势报告']
   },
   // 动态平衡测试-PDF报告
   {

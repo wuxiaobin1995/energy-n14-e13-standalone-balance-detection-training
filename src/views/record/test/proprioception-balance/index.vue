@@ -1,17 +1,17 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 17:47:20
- * @LastEditTime: 2023-03-04 11:40:13
- * @Description : 静态平衡测试-数据记录
+ * @LastEditTime: 2023-04-10 16:27:40
+ * @Description : 本体感觉平衡测试-数据记录
 -->
 <template>
-  <div class="static-balance">
+  <div class="proprioception-balance">
     <!-- 顶部 -->
     <div class="top-wrapper">
       <!-- 标题 -->
       <el-page-header
         title="返回首页"
-        content="静态平衡测试"
+        content="本体感觉平衡测试"
         @back="handleToHome"
       ></el-page-header>
       <!-- 日期筛选 -->
@@ -97,7 +97,7 @@
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'static-balance',
+  name: 'proprioception-balance',
 
   data() {
     return {
@@ -202,7 +202,7 @@ export default {
       db.test_data
         .where({
           userId: this.$store.state.currentUserInfo.userId,
-          type: '静态平衡测试'
+          type: '本体感觉平衡测试'
         })
         .toArray()
         .then(res => {
@@ -241,12 +241,12 @@ export default {
         .between(
           [
             this.$store.state.currentUserInfo.userId,
-            '静态平衡测试',
+            '本体感觉平衡测试',
             this.selectDateValue[0]
           ],
           [
             this.$store.state.currentUserInfo.userId,
-            '静态平衡测试',
+            '本体感觉平衡测试',
             this.selectDateValue[1]
           ],
           true,
@@ -298,11 +298,11 @@ export default {
      */
     handleToPdf(index, row) {
       this.$router.push({
-        path: '/test-static-balance-pdf',
+        path: '/test-proprioception-balance-pdf',
         query: {
           userId: JSON.stringify(row.userId),
           pdfTime: JSON.stringify(row.pdfTime),
-          routerName: JSON.stringify('/test-record/static-balance')
+          routerName: JSON.stringify('/test-record/proprioception-balance')
         }
       })
     },
@@ -357,11 +357,11 @@ export default {
      */
     handleSecularTrend() {
       this.$router.push({
-        path: '/test-static-balance-secular-trend-pdf',
+        path: '/test-proprioception-balance-secular-trend-pdf',
         query: {
           userId: JSON.stringify(this.$store.state.currentUserInfo.userId),
-          routerName: JSON.stringify('/test-record/static-balance'),
-          type: JSON.stringify('静态平衡测试')
+          routerName: JSON.stringify('/test-record/proprioception-balance'),
+          type: JSON.stringify('本体感觉平衡测试')
         }
       })
     },
@@ -373,7 +373,7 @@ export default {
       this.$router.push({
         path: '/refresh',
         query: {
-          routerName: JSON.stringify('/test-record/static-balance'),
+          routerName: JSON.stringify('/test-record/proprioception-balance'),
           duration: JSON.stringify(300)
         }
       })
@@ -383,7 +383,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.static-balance {
+.proprioception-balance {
   width: 100%;
   height: 90%;
   @include flex(column, stretch, center);

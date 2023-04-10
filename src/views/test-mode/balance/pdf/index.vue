@@ -1,20 +1,17 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-22 20:06:59
- * @LastEditTime: 2023-03-04 10:10:31
- * @Description : 静态平衡测试-PDF报告
+ * @LastEditTime: 2023-04-10 14:16:15
+ * @Description : 平衡测试-PDF报告
 -->
 <template>
-  <div
-    class="test-static-balance-pdf"
-    v-loading.fullscreen.lock="fullscreenLoading"
-  >
+  <div class="test-balance-pdf" v-loading.fullscreen.lock="fullscreenLoading">
     <!-- 打印区域 -->
     <div id="pdf" class="pdf-wrapper">
       <!-- 大标题 -->
       <div class="top">
         <div class="title">
-          静态平衡测试报告({{ pdfData.hospital ? pdfData.hospital : '' }})
+          平衡测试报告({{ pdfData.hospital ? pdfData.hospital : '' }})
         </div>
         <div class="logo">
           <el-image :src="logoSrc" fit="scale-down"></el-image>
@@ -117,7 +114,7 @@ import { setCircle } from '@/utils/setCircle.js'
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'test-static-balance-pdf',
+  name: 'test-balance-pdf',
 
   data() {
     return {
@@ -169,7 +166,7 @@ export default {
         .where({
           userId: this.userId,
           pdfTime: this.pdfTime,
-          type: '静态平衡测试'
+          type: '平衡测试'
         })
         .toArray()
         .then(res => {
@@ -512,7 +509,7 @@ export default {
     handlePrint() {
       this.$htmlToPdf(
         'pdf',
-        `静态平衡测试报告 ${this.$moment().format('YYYY-MM-DD HH_mm_ss')}`,
+        `平衡测试报告 ${this.$moment().format('YYYY-MM-DD HH_mm_ss')}`,
         420
       )
     },
@@ -542,7 +539,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test-static-balance-pdf {
+.test-balance-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);

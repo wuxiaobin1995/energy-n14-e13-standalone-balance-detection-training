@@ -1,18 +1,18 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 20:36:52
- * @LastEditTime: 2023-03-04 11:47:37
- * @Description : 静态平衡测试-长期趋势报告
+ * @LastEditTime: 2023-04-10 14:25:37
+ * @Description : 本体感觉平衡测试-长期趋势报告
 -->
 <template>
   <div
-    class="test-static-balance-secular-trend-pdf"
+    class="test-proprioception-balance-secular-trend-pdf"
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <!-- PDF区域 -->
     <div id="pdf" class="pdf-wrapper">
       <div class="up">
-        <div class="title">静态平衡测试-长期趋势报告</div>
+        <div class="title">本体感觉平衡测试-长期趋势报告</div>
         <div class="logo-img">
           <el-image :src="logoSrc" fit="scale-down"></el-image>
         </div>
@@ -39,7 +39,7 @@
 import { initDB } from '@/db/index.js'
 
 export default {
-  name: 'test-static-balance-secular-trend-pdf',
+  name: 'test-proprioception-balance-secular-trend-pdf',
 
   data() {
     return {
@@ -193,7 +193,7 @@ export default {
     handlePrint() {
       this.$htmlToPdf(
         'pdf',
-        `静态平衡测试-长期趋势报告 ${this.$moment().format(
+        `本体感觉平衡测试-长期趋势报告 ${this.$moment().format(
           'YYYY-MM-DD HH_mm_ss'
         )}`,
         580
@@ -222,7 +222,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.test-static-balance-secular-trend-pdf {
+.test-proprioception-balance-secular-trend-pdf {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);

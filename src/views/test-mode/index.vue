@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-02 17:48:59
- * @LastEditTime: 2023-03-03 17:45:42
+ * @LastEditTime: 2023-04-10 17:03:21
  * @Description : 测试-项目选择
 -->
 <template>
@@ -9,14 +9,26 @@
     <div class="btn">
       <el-button
         class="item"
-        :class="[isActiveStaticBalance]"
-        :icon="
-          isActiveStaticBalance === 'btn__active' ? 'el-icon-circle-check' : ''
-        "
+        :class="[isActiveBalance]"
+        :icon="isActiveBalance === 'btn__active' ? 'el-icon-circle-check' : ''"
         type="danger"
         round
-        @click="handleStaticBalance"
-        >静态平衡测试</el-button
+        @click="handleBalance"
+        >平衡测试</el-button
+      >
+
+      <el-button
+        class="item"
+        :class="[isActiveProprioceptionBalance]"
+        :icon="
+          isActiveProprioceptionBalance === 'btn__active'
+            ? 'el-icon-circle-check'
+            : ''
+        "
+        type="primary"
+        round
+        @click="handleProprioceptionBalance"
+        >本体感觉测试</el-button
       >
 
       <el-button
@@ -47,7 +59,8 @@ export default {
   data() {
     return {
       /* 动态css */
-      isActiveStaticBalance: '',
+      isActiveBalance: '',
+      isActiveProprioceptionBalance: '',
       isActiveDynamicBalance: ''
     }
   },
@@ -55,10 +68,15 @@ export default {
   watch: {
     '$route.path': {
       handler(newVal, oldval) {
-        if (newVal === '/test-select/static-balance-set') {
-          this.isActiveStaticBalance = 'btn__active'
+        if (newVal === '/test-select/balance-set') {
+          this.isActiveBalance = 'btn__active'
         } else {
-          this.isActiveStaticBalance = ''
+          this.isActiveBalance = ''
+        }
+        if (newVal === '/test-select/proprioception-balance-set') {
+          this.isActiveProprioceptionBalance = 'btn__active'
+        } else {
+          this.isActiveProprioceptionBalance = ''
         }
         if (newVal === '/test-select/dynamic-balance-set') {
           this.isActiveDynamicBalance = 'btn__active'
@@ -72,10 +90,17 @@ export default {
 
   methods: {
     /**
-     * @description: 静态平衡测试
+     * @description: 平衡测试
      */
-    handleStaticBalance() {
-      this.$router.push({ path: '/test-select/static-balance-set' })
+    handleBalance() {
+      this.$router.push({ path: '/test-select/balance-set' })
+    },
+
+    /**
+     * @description: 本体感觉平衡测试
+     */
+    handleProprioceptionBalance() {
+      this.$router.push({ path: '/test-select/proprioception-balance-set' })
     },
 
     /**
