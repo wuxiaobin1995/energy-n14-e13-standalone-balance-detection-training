@@ -77,7 +77,7 @@ export default {
 
   data() {
     return {
-      sketchMapSrc: require('@/assets/img/Test/Balance/1.png'), // 示意图
+      sketchMapSrc: require('@/assets/img/Test/Balance/show.png'), // 示意图
 
       /* 语音相关 */
       audioOpen: this.$store.state.voiceSwitch,

@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-02 17:48:59
- * @LastEditTime: 2023-04-10 17:03:21
+ * @LastEditTime: 2023-04-12 17:19:51
  * @Description : 测试-项目选择
 -->
 <template>
@@ -33,14 +33,40 @@
 
       <el-button
         class="item"
-        :class="[isActiveDynamicBalance]"
+        :class="[isActiveLRBalance]"
         :icon="
-          isActiveDynamicBalance === 'btn__active' ? 'el-icon-circle-check' : ''
+          isActiveLRBalance === 'btn__active' ? 'el-icon-circle-check' : ''
         "
         type="warning"
         round
-        @click="handleDynamicBalance"
-        >动态平衡测试</el-button
+        @click="handleLRBalance"
+        >左右平衡测试</el-button
+      >
+
+      <el-button
+        class="item"
+        :class="[isActiveFBBalance]"
+        :icon="
+          isActiveFBBalance === 'btn__active' ? 'el-icon-circle-check' : ''
+        "
+        type="success"
+        round
+        @click="handleFBBalance"
+        >前后平衡测试</el-button
+      >
+
+      <el-button
+        class="item"
+        :class="[isActiveDiagonalBalance]"
+        :icon="
+          isActiveDiagonalBalance === 'btn__active'
+            ? 'el-icon-circle-check'
+            : ''
+        "
+        type="info"
+        round
+        @click="handleDiagonalBalance"
+        >对角线平衡测试</el-button
       >
     </div>
 
@@ -61,7 +87,9 @@ export default {
       /* 动态css */
       isActiveBalance: '',
       isActiveProprioceptionBalance: '',
-      isActiveDynamicBalance: ''
+      isActiveLRBalance: '',
+      isActiveFBBalance: '',
+      isActiveDiagonalBalance: ''
     }
   },
 
@@ -78,10 +106,20 @@ export default {
         } else {
           this.isActiveProprioceptionBalance = ''
         }
-        if (newVal === '/test-select/dynamic-balance-set') {
-          this.isActiveDynamicBalance = 'btn__active'
+        if (newVal === '/test-select/lr-balance-set') {
+          this.isActiveLRBalance = 'btn__active'
         } else {
-          this.isActiveDynamicBalance = ''
+          this.isActiveLRBalance = ''
+        }
+        if (newVal === '/test-select/fb-balance-set') {
+          this.isActiveFBBalance = 'btn__active'
+        } else {
+          this.isActiveFBBalance = ''
+        }
+        if (newVal === '/test-select/diagonal-balance-set') {
+          this.isActiveDiagonalBalance = 'btn__active'
+        } else {
+          this.isActiveDiagonalBalance = ''
         }
       },
       immediate: true
@@ -104,10 +142,24 @@ export default {
     },
 
     /**
-     * @description: 动态平衡测试
+     * @description: 左右平衡测试
      */
-    handleDynamicBalance() {
-      this.$router.push({ path: '/test-select/dynamic-balance-set' })
+    handleLRBalance() {
+      this.$router.push({ path: '/test-select/lr-balance-set' })
+    },
+
+    /**
+     * @description: 前后平衡测试
+     */
+    handleFBBalance() {
+      this.$router.push({ path: '/test-select/fb-balance-set' })
+    },
+
+    /**
+     * @description: 对角线平衡测试
+     */
+    handleDiagonalBalance() {
+      this.$router.push({ path: '/test-select/diagonal-balance-set' })
     }
   }
 }
@@ -138,7 +190,7 @@ export default {
     @include flex(column, stretch, stretch);
     .item {
       margin: 6px 0;
-      width: 180px;
+      width: 190px;
       font-size: 22px;
     }
     .btn__active {

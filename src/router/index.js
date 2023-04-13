@@ -1,7 +1,7 @@
 /*
  * @Author      : Mr.bin
  * @Date        : 2021-09-13 16:45:54
- * @LastEditTime: 2023-04-10 17:04:25
+ * @LastEditTime: 2023-04-13 10:05:07
  * @Description : 路由
  */
 import Vue from 'vue'
@@ -123,12 +123,26 @@ const routes = [
               import('@/views/test-mode/proprioception-balance/set'),
             meta: ['本体感觉平衡测试']
           },
-          // 动态平衡测试
+          // 左右平衡测试
           {
-            path: 'dynamic-balance-set',
-            name: 'dynamic-balance-set',
-            component: () => import('@/views/test-mode/dynamic-balance/set'),
-            meta: ['动态平衡测试']
+            path: 'lr-balance-set',
+            name: 'lr-balance-set',
+            component: () => import('@/views/test-mode/lr-balance/set'),
+            meta: ['左右平衡测试']
+          },
+          // 前后平衡测试
+          {
+            path: 'fb-balance-set',
+            name: 'fb-balance-set',
+            component: () => import('@/views/test-mode/fb-balance/set'),
+            meta: ['前后平衡测试']
+          },
+          // 对角线平衡测试
+          {
+            path: 'diagonal-balance-set',
+            name: 'diagonal-balance-set',
+            component: () => import('@/views/test-mode/diagonal-balance/set'),
+            meta: ['对角线平衡测试']
           }
         ]
       },
@@ -162,53 +176,48 @@ const routes = [
           import('@/views/test-mode/proprioception-balance/measure'),
         meta: ['本体感觉平衡测试-具体测量']
       },
-      // 动态平衡测试-测前体验1
+      // 左右平衡测试-测前体验
       {
-        path: 'test-dynamic-balance-experience-one',
-        name: 'test-dynamic-balance-experience-one',
-        component: () =>
-          import('@/views/test-mode/dynamic-balance/experience/one'),
-        meta: ['动态平衡测试-测前体验1']
+        path: 'test-lr-balance-experience',
+        name: 'test-lr-balance-experience',
+        component: () => import('@/views/test-mode/lr-balance/experience'),
+        meta: ['左右平衡测试-测前体验']
       },
-      // 动态平衡测试-测前体验2
+      // 左右平衡测试-具体测量
       {
-        path: 'test-dynamic-balance-experience-two',
-        name: 'test-dynamic-balance-experience-two',
-        component: () =>
-          import('@/views/test-mode/dynamic-balance/experience/two'),
-        meta: ['动态平衡测试-测前体验2']
+        path: 'test-lr-balance-measure',
+        name: 'test-lr-balance-measure',
+        component: () => import('@/views/test-mode/lr-balance/measure'),
+        meta: ['左右平衡测试-具体测量']
       },
-      // 动态平衡测试-测前体验3
+      // 前后平衡测试-测前体验
       {
-        path: 'test-dynamic-balance-experience-three',
-        name: 'test-dynamic-balance-experience-three',
-        component: () =>
-          import('@/views/test-mode/dynamic-balance/experience/three'),
-        meta: ['动态平衡测试-测前体验3']
+        path: 'test-fb-balance-experience',
+        name: 'test-fb-balance-experience',
+        component: () => import('@/views/test-mode/fb-balance/experience'),
+        meta: ['前后平衡测试-测前体验']
       },
-      // 动态平衡测试-测量1
+      // 前后平衡测试-具体测量
       {
-        path: 'test-dynamic-balance-measure-one',
-        name: 'test-dynamic-balance-measure-one',
-        component: () =>
-          import('@/views/test-mode/dynamic-balance/measure/one'),
-        meta: ['动态平衡测试-测量1']
+        path: 'test-fb-balance-measure',
+        name: 'test-fb-balance-measure',
+        component: () => import('@/views/test-mode/fb-balance/measure'),
+        meta: ['前后平衡测试-具体测量']
       },
-      // 动态平衡测试-测量2
+      // 对角线平衡测试-测前体验
       {
-        path: 'test-dynamic-balance-measure-two',
-        name: 'test-dynamic-balance-measure-two',
+        path: 'test-diagonal-balance-experience',
+        name: 'test-diagonal-balance-experience',
         component: () =>
-          import('@/views/test-mode/dynamic-balance/measure/two'),
-        meta: ['动态平衡测试-测量2']
+          import('@/views/test-mode/diagonal-balance/experience'),
+        meta: ['对角线平衡测试-测前体验']
       },
-      // 动态平衡测试-测量3
+      // 对角线平衡测试-具体测量
       {
-        path: 'test-dynamic-balance-measure-three',
-        name: 'test-dynamic-balance-measure-three',
-        component: () =>
-          import('@/views/test-mode/dynamic-balance/measure/three'),
-        meta: ['动态平衡测试-测量3']
+        path: 'test-diagonal-balance-measure',
+        name: 'test-diagonal-balance-measure',
+        component: () => import('@/views/test-mode/diagonal-balance/measure'),
+        meta: ['对角线平衡测试-具体测量']
       },
 
       /* 训练模块 */
@@ -275,12 +284,26 @@ const routes = [
               import('@/views/record/test/proprioception-balance'),
             meta: ['本体感觉平衡测试']
           },
-          // 动态平衡测试
+          // 左右平衡测试
           {
-            path: 'dynamic-balance',
-            name: 'dynamic-balance',
-            component: () => import('@/views/record/test/dynamic-balance'),
-            meta: ['动态平衡测试']
+            path: 'lr-balance',
+            name: 'lr-balance',
+            component: () => import('@/views/record/test/lr-balance'),
+            meta: ['左右平衡测试']
+          },
+          // 前后平衡测试
+          {
+            path: 'fb-balance',
+            name: 'fb-balance',
+            component: () => import('@/views/record/test/fb-balance'),
+            meta: ['前后平衡测试']
+          },
+          // 对角线平衡测试
+          {
+            path: 'diagonal-balance',
+            name: 'diagonal-balance',
+            component: () => import('@/views/record/test/diagonal-balance'),
+            meta: ['对角线平衡测试']
           }
         ]
       },
@@ -341,20 +364,48 @@ const routes = [
       import('@/views/record/test/proprioception-balance/secular-trend-pdf'),
     meta: ['本体感觉平衡测试-长期趋势报告']
   },
-  // 动态平衡测试-PDF报告
+  // 左右平衡测试-PDF报告
   {
-    path: '/test-dynamic-balance-pdf',
-    name: 'test-dynamic-balance-pdf',
-    component: () => import('@/views/test-mode/dynamic-balance/pdf'),
-    meta: ['动态平衡测试-PDF报告']
+    path: '/test-lr-balance-pdf',
+    name: 'test-lr-balance-pdf',
+    component: () => import('@/views/test-mode/lr-balance/pdf'),
+    meta: ['左右平衡测试-PDF报告']
   },
-  // 动态平衡测试-长期趋势报告
+  // 左右平衡测试-长期趋势报告
   {
-    path: '/test-dynamic-balance-secular-trend-pdf',
-    name: 'test-dynamic-balance-secular-trend-pdf',
+    path: '/test-lr-balance-secular-trend-pdf',
+    name: 'test-lr-balance-secular-trend-pdf',
+    component: () => import('@/views/record/test/lr-balance/secular-trend-pdf'),
+    meta: ['左右平衡测试-长期趋势报告']
+  },
+  // 前后平衡测试-PDF报告
+  {
+    path: '/test-fb-balance-pdf',
+    name: 'test-fb-balance-pdf',
+    component: () => import('@/views/test-mode/fb-balance/pdf'),
+    meta: ['前后平衡测试-PDF报告']
+  },
+  // 前后平衡测试-长期趋势报告
+  {
+    path: '/test-fb-balance-secular-trend-pdf',
+    name: 'test-fb-balance-secular-trend-pdf',
+    component: () => import('@/views/record/test/fb-balance/secular-trend-pdf'),
+    meta: ['前后平衡测试-长期趋势报告']
+  },
+  // 对角线平衡测试-PDF报告
+  {
+    path: '/test-diagonal-balance-pdf',
+    name: 'test-diagonal-balance-pdf',
+    component: () => import('@/views/test-mode/diagonal-balance/pdf'),
+    meta: ['对角线平衡测试-PDF报告']
+  },
+  // 对角线平衡测试-长期趋势报告
+  {
+    path: '/test-diagonal-balance-secular-trend-pdf',
+    name: 'test-diagonal-balance-secular-trend-pdf',
     component: () =>
-      import('@/views/record/test/dynamic-balance/secular-trend-pdf'),
-    meta: ['动态平衡测试-长期趋势报告']
+      import('@/views/record/test/diagonal-balance/secular-trend-pdf'),
+    meta: ['对角线平衡测试-长期趋势报告']
   },
 
   /* 训练报告 */

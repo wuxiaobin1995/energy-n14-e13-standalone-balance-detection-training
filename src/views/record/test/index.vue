@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-03-03 15:50:23
- * @LastEditTime: 2023-04-10 16:36:36
+ * @LastEditTime: 2023-04-13 09:58:25
  * @Description : 测试-数据记录
 -->
 <template>
@@ -26,8 +26,26 @@
           type="warning"
           round
           plain
-          @click="handleDynamicBalance"
-          >动态平衡测试</el-button
+          @click="handleLRBalance"
+          >左右平衡测试</el-button
+        >
+
+        <el-button
+          class="item"
+          type="success"
+          round
+          plain
+          @click="handleFBBalance"
+          >前后平衡测试</el-button
+        >
+
+        <el-button
+          class="item"
+          type="info"
+          round
+          plain
+          @click="handleDiagonalBalance"
+          >对角线平衡测试</el-button
         >
       </div>
 
@@ -60,10 +78,24 @@ export default {
     },
 
     /**
-     * @description: 动态平衡测试
+     * @description: 左右平衡测试
      */
-    handleDynamicBalance() {
-      this.$router.push({ path: '/test-record/dynamic-balance' })
+    handleLRBalance() {
+      this.$router.push({ path: '/test-record/lr-balance' })
+    },
+
+    /**
+     * @description: 前后平衡测试
+     */
+    handleFBBalance() {
+      this.$router.push({ path: '/test-record/fb-balance' })
+    },
+
+    /**
+     * @description: 对角线平衡测试
+     */
+    handleDiagonalBalance() {
+      this.$router.push({ path: '/test-record/diagonal-balance' })
     }
   }
 }
@@ -96,7 +128,7 @@ export default {
     .btn {
       @include flex(row, space-around, center);
       .item {
-        width: 180px;
+        width: 200px;
         font-size: 22px;
       }
     }

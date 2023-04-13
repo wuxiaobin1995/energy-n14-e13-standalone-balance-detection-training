@@ -1,20 +1,20 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-25 11:19:13
- * @LastEditTime: 2023-04-12 10:47:04
- * @Description : 本体感觉平衡测试-参数设置
+ * @LastEditTime: 2023-04-12 11:16:36
+ * @Description : 左右平衡测试-参数设置
 -->
 <template>
-  <div class="proprioception-balance-set">
+  <div class="lr-balance-set">
     <!-- 语音播放 -->
     <audio ref="audio" controls="controls" hidden :src="audioSrc" />
 
     <!-- 标题 -->
-    <div class="title">本体感觉平衡测试</div>
+    <div class="title">左右平衡测试</div>
 
     <!-- 提示 -->
     <div class="tip">
-      提示语：请双腿平稳站立在平台上，测试静态平衡站立时的平衡功能状况。
+      提示语：请双腿平稳站立在平台上，测试左右重心动态转移的平衡能力。
     </div>
 
     <!-- 主体 -->
@@ -35,11 +35,11 @@
           <div class="parameter__time--testTime">{{ testTime }}s</div>
         </div>
         <!-- 视觉反馈 -->
-        <div :style="{ display: 'none' }" class="parameter__visual">
+        <div class="parameter__visual">
           <el-checkbox v-model="isVisual" border label="视觉反馈"></el-checkbox>
         </div>
         <!-- 重心轨迹 -->
-        <div :style="{ display: 'none' }" class="parameter__barycenter">
+        <div class="parameter__barycenter">
           <el-checkbox
             v-model="isBarycenter"
             border
@@ -73,19 +73,19 @@
 import path from 'path'
 
 export default {
-  name: 'proprioception-balance-set',
+  name: 'lr-balance-set',
 
   data() {
     return {
-      sketchMapSrc: require('@/assets/img/Test/Proprioception_Balance/show.png'), // 示意图
+      sketchMapSrc: require('@/assets/img/Test/LR_Balance/show.png'), // 示意图
 
       /* 语音相关 */
       audioOpen: this.$store.state.voiceSwitch,
-      audioSrc: path.join(__static, `narrate/mandarin/本体感觉平衡测试.mp3`),
+      audioSrc: path.join(__static, `narrate/mandarin/动态平衡测试.mp3`),
 
       testTime: 30, // 测试时长
       isVisual: true, // 是否开启视觉反馈
-      isBarycenter: false // 是否开启重心轨迹
+      isBarycenter: true // 是否开启重心轨迹
     }
   },
 
@@ -98,13 +98,25 @@ export default {
     }
   },
 
+  watch: {
+    /* 如果视觉反馈为false，则重心轨迹也要设为false */
+    isVisual: {
+      handler(newValue, oldValue) {
+        if (newValue === false) {
+          this.isBarycenter = false
+        }
+      },
+      immediate: true
+    }
+  },
+
   methods: {
     /**
      * @description: 测前体验按钮
      */
     handleStart() {
       this.$router.push({
-        path: '/test-proprioception-balance-experience',
+        path: '/test-lr-balance-experience',
         query: {
           testTime: JSON.stringify(this.testTime), // 测试时长
           isVisual: JSON.stringify(this.isVisual), // 是否开启视觉反馈
@@ -117,7 +129,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.proprioception-balance-set {
+.lr-balance-set {
   width: 100%;
   height: 100%;
   @include flex(column, stretch, stretch);
