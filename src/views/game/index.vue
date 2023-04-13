@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-12-05 22:27:06
- * @LastEditTime: 2023-03-06 11:40:30
+ * @LastEditTime: 2023-04-13 14:39:34
  * @Description : 游戏
 -->
 <template>
@@ -149,6 +149,7 @@ export default {
         devices_name: '单机版无设备编号', // 设备编号（网络版才有）
         user_name: this.$store.state.currentUserInfo.userName,
         devices_sort: 'pht', // 平衡台
+        blooth_name: '636PHT', // 蓝牙名称
         exe_path:
           'C:/Program Files/energy-n14-e13-standalone-balance-detection-training/平衡能力检测与训练软件-单机版.exe' // 自己程序的绝对路径
       })
@@ -173,18 +174,15 @@ export default {
 
           /* 调起游戏操作 */
           const exec = require('child_process').exec
-          exec(
-            `C:/Chicken-CrazyPark/Chicken-CrazyPark.exe`,
-            (error, stdout, stderr) => {
-              if (error != null) {
-                this.$message({
-                  message: `调起游戏操作失败：${JSON.stringify(error)}`,
-                  type: 'error',
-                  duration: 10000
-                })
-              }
+          exec(`C:/Crazy-Plate/Crazy-Plate.exe`, (error, stdout, stderr) => {
+            if (error != null) {
+              this.$message({
+                message: `调起游戏操作失败：${JSON.stringify(error)}`,
+                type: 'error',
+                duration: 10000
+              })
             }
-          )
+          })
 
           /* 关闭自身软件 */
           setTimeout(() => {
