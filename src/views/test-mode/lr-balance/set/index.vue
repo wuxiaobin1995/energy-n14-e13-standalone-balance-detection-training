@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-25 11:19:13
- * @LastEditTime: 2023-04-12 11:16:36
+ * @LastEditTime: 2023-04-14 09:18:04
  * @Description : 左右平衡测试-参数设置
 -->
 <template>
@@ -81,7 +81,7 @@ export default {
 
       /* 语音相关 */
       audioOpen: this.$store.state.voiceSwitch,
-      audioSrc: path.join(__static, `narrate/mandarin/动态平衡测试.mp3`),
+      audioSrc: path.join(__static, `narrate/mandarin/左右平衡测试.mp3`),
 
       testTime: 30, // 测试时长
       isVisual: true, // 是否开启视觉反馈
