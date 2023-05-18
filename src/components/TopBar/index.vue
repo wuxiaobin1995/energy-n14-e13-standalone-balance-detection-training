@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-07-28 10:25:39
- * @LastEditTime: 2023-03-03 17:14:29
+ * @LastEditTime: 2023-05-18 11:09:44
  * @Description : 顶部栏
 -->
 <template>
@@ -14,7 +14,7 @@
         fit="scale-down"
         @click.native="handleToHome"
       ></el-image>
-      <span class="text">平衡能力检测与训练软件-单机版 v2.0.0</span>
+      <span class="text">平衡测试与康复训练系统</span>
     </div>
 
     <!-- 蓝牙连接状态 -->

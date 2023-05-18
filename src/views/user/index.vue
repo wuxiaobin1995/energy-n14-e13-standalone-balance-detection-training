@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-07-28 11:35:59
- * @LastEditTime: 2022-12-05 10:11:52
+ * @LastEditTime: 2023-05-17 15:57:31
  * @Description : 用户
 -->
 <template>
@@ -428,7 +428,7 @@ export default {
               header: tHeader, // 表头 必填
               data: exportData, // 具体数据 必填
               filename:
-                '平衡能力检测与训练软件-单机版-所有用户信息 ' +
+                '平衡测试与康复训练系统-单机版-所有用户信息 ' +
                 this.$moment().format('YYYY-MM-DD HH_mm_ss'), // 导出文件名，非必填
               autoWidth: true, // 自适应列宽，非必填
               bookType: 'xlsx' // 导出格式，非必填

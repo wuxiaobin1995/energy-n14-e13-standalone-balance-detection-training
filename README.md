@@ -5,7 +5,7 @@
  * @Description : energy-n14-e13-standalone-balance-detection-training
 -->
 
-# 平衡能力检测与训练软件-单机版
+# 平衡测试与康复训练系统-单机版
 
 ## 串口定义
 

@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 21:45:13
- * @LastEditTime: 2023-03-03 17:16:32
+ * @LastEditTime: 2023-05-18 11:09:52
  * @Description : 开发者页面
 -->
 <template>
@@ -10,7 +10,7 @@
       <el-page-header
         class="page"
         title="返回首页"
-        content="开发者"
+        content="开发者（单机版）"
         @back="handleToHome"
       ></el-page-header>
 

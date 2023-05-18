@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-12-05 22:27:06
- * @LastEditTime: 2023-04-13 14:39:34
+ * @LastEditTime: 2023-05-17 15:57:43
  * @Description : 游戏
 -->
 <template>
@@ -151,7 +151,7 @@ export default {
         devices_sort: 'pht', // 平衡台
         blooth_name: '636PHT', // 蓝牙名称
         exe_path:
-          'C:/Program Files/energy-n14-e13-standalone-balance-detection-training/平衡能力检测与训练软件-单机版.exe' // 自己程序的绝对路径
+          'C:/Program Files/energy-n14-e13-standalone-balance-detection-training/平衡测试与康复训练系统-单机版.exe' // 自己程序的绝对路径
       })
 
       /* 使用fs库写文件 */
