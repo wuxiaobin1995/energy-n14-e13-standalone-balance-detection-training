@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-09-26 16:56:17
- * @LastEditTime: 2023-04-12 17:26:38
+ * @LastEditTime: 2023-06-20 11:47:12
  * @Description : 对角线平衡测试-具体测量
 -->
 <template>
@@ -11,7 +11,7 @@
       <div class="title">对角线平衡测试</div>
 
       <!-- 提示 -->
-      <div class="tip">测试内容：对角线重点转移</div>
+      <div class="tip">测试内容：对角线重心转移</div>
 
       <!-- 主体 -->
       <div class="main">

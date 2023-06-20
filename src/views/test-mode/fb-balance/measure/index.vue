@@ -11,7 +11,7 @@
       <div class="title">前后平衡测试</div>
 
       <!-- 提示 -->
-      <div class="tip">测试内容：前后重点转移</div>
+      <div class="tip">测试内容：前后重心转移</div>
 
       <!-- 主体 -->
       <div class="main">
