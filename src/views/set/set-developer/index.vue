@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-27 21:45:13
- * @LastEditTime: 2023-05-18 11:09:52
+ * @LastEditTime: 2023-06-26 10:49:54
  * @Description : 开发者页面
 -->
 <template>
@@ -33,6 +33,19 @@
           ></el-input-number>
         </div>
       </div>
+
+      <!-- 免责声明 -->
+      <div class="disclaimer">
+        <el-input class="item" placeholder="请输入终端用户名称" v-model="name">
+          <template slot="prepend">终端用户名称：</template>
+        </el-input>
+        <el-input class="item" placeholder="请输入设备编号" v-model="deviceId">
+          <template slot="prepend">设备编号：</template>
+        </el-input>
+        <el-button class="item" type="primary" @click="handleSetDisclaimer"
+          >确 定</el-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -46,7 +59,10 @@ export default {
 
   data() {
     return {
-      boundaryAngle: 12
+      boundaryAngle: 12,
+
+      name: '',
+      deviceId: ''
     }
   },
 
@@ -54,6 +70,9 @@ export default {
     this.boundaryAngle = parseFloat(
       window.localStorage.getItem('boundaryAngle')
     )
+
+    this.name = window.localStorage.getItem('disclaimer_name')
+    this.deviceId = window.localStorage.getItem('disclaimer_device_id')
   },
 
   methods: {
@@ -94,6 +113,20 @@ export default {
         type: 'success',
         duration: 500
       })
+    },
+
+    /**
+     * @description: 设置免责声明
+     */
+    handleSetDisclaimer() {
+      window.localStorage.setItem('disclaimer_name', this.name)
+      window.localStorage.setItem('disclaimer_device_id', this.deviceId)
+
+      this.$message({
+        type: 'success',
+        message: `设置免责声明成功！`,
+        duration: 3000
+      })
     }
   }
 }
@@ -129,8 +162,20 @@ export default {
     }
 
     .set-boundaryAngle {
-      margin-top: 70px;
+      margin-top: 50px;
       @include flex(row, center, center);
+    }
+
+    .disclaimer {
+      width: 50%;
+      margin-top: 50px;
+      border: 2px solid rgb(133, 130, 130);
+      border-radius: 20px;
+      padding: 20px 20px 0 20px;
+      @include flex(column, stretch, stretch);
+      .item {
+        margin-bottom: 30px;
+      }
     }
   }
 }
