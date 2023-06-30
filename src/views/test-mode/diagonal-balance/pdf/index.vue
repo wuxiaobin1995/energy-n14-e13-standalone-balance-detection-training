@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2021-12-22 20:06:59
- * @LastEditTime: 2023-04-12 17:35:15
+ * @LastEditTime: 2023-06-30 22:35:59
  * @Description : 对角线平衡测试-PDF报告
 -->
 <template>
@@ -522,6 +522,7 @@ export default {
         this.score = parseInt(
           ((yes.length / trackArray.length) * 100).toFixed(0)
         )
+
         if (this.score < 40) {
           this.scoreText = '差'
         } else if (this.score >= 40 && this.score < 60) {
