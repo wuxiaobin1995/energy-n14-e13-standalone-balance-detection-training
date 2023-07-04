@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2023-06-22 16:57:50
- * @LastEditTime: 2023-06-22 17:03:44
+ * @LastEditTime: 2023-07-03 15:20:13
  * @Description : 导出所选用户的数据（测试、训练、......）
 -->
 <template>
@@ -97,6 +97,7 @@ export default {
       loading: false, // 加载动画
 
       allUserData: [], // user表的所有用户数据
+
       allTestData: [], // test_data表的所有数据
       allTrainData: [], // train_data表的所有数据
 
@@ -185,6 +186,8 @@ export default {
           for (let i = 0; i < this.allTestData.length; i++) {
             const item = this.allTestData[i]
             if (userIdArray.includes(item.userId)) {
+              const trackArray = JSON.stringify(item.trackArray)
+              item.trackArray = trackArray
               this.outputTestData.push(item)
             }
           }
@@ -203,7 +206,8 @@ export default {
                 hospital: '医院',
                 pdfTime: '测量时间',
                 affectedSide: '患侧',
-                type: '测试项目'
+                type: '测试项目',
+                trackArray: '测量结果'
               }
               const tHeader = Object.values(excelTitle)
               // 会根据key键的顺序、属性值等动态变化
@@ -283,6 +287,8 @@ export default {
           for (let i = 0; i < this.allTrainData.length; i++) {
             const item = this.allTrainData[i]
             if (userIdArray.includes(item.userId)) {
+              const trackArray = JSON.stringify(item.trackArray)
+              item.trackArray = trackArray
               this.outputTrainData.push(item)
             }
           }
@@ -301,7 +307,8 @@ export default {
                 hospital: '医院',
                 pdfTime: '测量时间',
                 affectedSide: '患侧',
-                type: '类型'
+                type: '类型',
+                trackArray: '测量结果'
               }
               const tHeader = Object.values(excelTitle)
               // 会根据key键的顺序、属性值等动态变化
