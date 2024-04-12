@@ -1,7 +1,7 @@
 <!--
  * @Author      : Mr.bin
  * @Date        : 2022-07-28 10:25:39
- * @LastEditTime: 2024-01-11 16:42:49
+ * @LastEditTime: 2024-04-10 08:43:20
  * @Description : 顶部栏
 -->
 <template>
@@ -14,7 +14,7 @@
         fit="scale-down"
         @click.native="handleToHome"
       ></el-image>
-      <span class="text">平衡测试与康复训练系统</span>
+      <span class="text">平衡测试与康复训练系统 V1.0.0</span>
     </div>
 
     <!-- 蓝牙连接状态 -->
